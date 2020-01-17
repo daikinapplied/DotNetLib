@@ -35,9 +35,9 @@ Function PublishNuGet
 	{
 		Try
 		{
-			$searchFile = $rootFolder + $project + "\bin\" + $prodBits + "\*.nupkg"
+			$searchFile = $rootFolder + "\" + $project + "\bin\" + $prodBits + "\*.nupkg"
 			Write-Host "Searching: $searchFile"
-			$newestPackage = Get-ChildItem $searchFile -File -ErrorAction Stop | Sort-Object LastAccessTime -Descending | Select-Object -First 1
+			$newestPackage = Get-ChildItem "$searchFile" -File -ErrorAction Stop | Sort-Object LastAccessTime -Descending | Select-Object -First 1
 			if ($newestPackage)
 			{
 				Write-Host "Found: $newestPackage.FullName"
@@ -76,7 +76,6 @@ Function PublishNuGet
     {
         Write-Host "Unable to find a package to deploy"
     } 
-	Write-Host
 }
 
 # ~~~[Main Body]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,14 +116,15 @@ $scriptFolder = $PSScriptRoot
 Write-Host "Script Startup Folder: $startupFolder"
 Write-Host "This Script Folder: $scriptFolder"
 
-PublishNuGet "Daikin.DotNetLib.Application", $scriptFolder
-PublishNuGet "Daikin.DotNetLib.Data", $scriptFolder
-PublishNuGet "Daikin.DotNetLib.DotNetNuke", $scriptFolder
-PublishNuGet "Daikin.DotNetLib.Facebook", $scriptFolder
-PublishNuGet "Daikin.DotNetLib.Security", $scriptFolder
-PublishNuGet "Daikin.DotNetLib.Network", $scriptFolder
-PublishNuGet "Daikin.DotNetLib.Windows", $scriptFolder
-PublishNuGet "Daikin.DotNetLib.Serial", $scriptFolder
+
+PublishNuGet "Daikin.DotNetLib.Application" $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Data" $scriptFolder
+PublishNuGet "Daikin.DotNetLib.DotNetNuke" $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Facebook" $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Security" $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Network" $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Windows" $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Serial" $scriptFolder
 
 exit 0
 # ~End~
