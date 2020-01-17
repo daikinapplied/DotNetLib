@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecursiveGeek.DotNetLib.Core.Tests", "RecursiveGeek.DotNetLib.Core.Tests\RecursiveGeek.DotNetLib.Core.Tests.csproj", "{0CFAA82D-29E1-47FB-9E0D-5E3C4E8655F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecursiveGeek.DotNetLib.DotNetNuke", "RecursiveGeek.DotNetLib.DotNetNuke\RecursiveGeek.DotNetLib.DotNetNuke.csproj", "{27350D35-164C-4579-9FD6-54CF4F070A08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecursiveGeek.DotNetLib.Data", "RecursiveGeek.DotNetLib.Data\RecursiveGeek.DotNetLib.Data.csproj", "{BB41C32C-23CE-4037-93BD-296966907CBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecursiveGeek.DotNetLib.Windows", "RecursiveGeek.DotNetLib.Windows\RecursiveGeek.DotNetLib.Windows.csproj", "{F73A53B4-6FA8-468D-92D6-E35345ECDBE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3BF6E57E-C084-4D6A-982C-5552C8534F42}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		Clean.VisualStudio.ps1 = Clean.VisualStudio.ps1
+		NuGetAll.ps1 = NuGetAll.ps1
+		NuGetPackage.ps1 = NuGetPackage.ps1
+		NuGetPublish.ps1 = NuGetPublish.ps1
+		NuGetStage.ps1 = NuGetStage.ps1
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecursiveGeek.DotNetLib.Facebook", "RecursiveGeek.DotNetLib.Facebook\RecursiveGeek.DotNetLib.Facebook.csproj", "{97D84D7F-175A-41B8-A8E7-AA907697D438}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecursiveGeek.DotNetLib.Application", "RecursiveGeek.DotNetLib.Application\RecursiveGeek.DotNetLib.Application.csproj", "{78445E51-5892-48D5-9C0A-E5399FB871CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecursiveGeek.DotNetLib.Security", "RecursiveGeek.DotNetLib.Security\RecursiveGeek.DotNetLib.Security.csproj", "{7E0615CA-619C-45DC-8E17-0375A8A287CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecursiveGeek.DotNetLib.Network", "RecursiveGeek.DotNetLib.Network\RecursiveGeek.DotNetLib.Network.csproj", "{BD81C147-D568-4BF5-B696-59B9183CB8F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecursiveGeek.DotNetLib.Serial", "RecursiveGeek.DotNetLib.Serial\RecursiveGeek.DotNetLib.Serial.csproj", "{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CFAA82D-29E1-47FB-9E0D-5E3C4E8655F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CFAA82D-29E1-47FB-9E0D-5E3C4E8655F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CFAA82D-29E1-47FB-9E0D-5E3C4E8655F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CFAA82D-29E1-47FB-9E0D-5E3C4E8655F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27350D35-164C-4579-9FD6-54CF4F070A08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27350D35-164C-4579-9FD6-54CF4F070A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27350D35-164C-4579-9FD6-54CF4F070A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27350D35-164C-4579-9FD6-54CF4F070A08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB41C32C-23CE-4037-93BD-296966907CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB41C32C-23CE-4037-93BD-296966907CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB41C32C-23CE-4037-93BD-296966907CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB41C32C-23CE-4037-93BD-296966907CBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F73A53B4-6FA8-468D-92D6-E35345ECDBE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F73A53B4-6FA8-468D-92D6-E35345ECDBE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F73A53B4-6FA8-468D-92D6-E35345ECDBE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F73A53B4-6FA8-468D-92D6-E35345ECDBE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D84D7F-175A-41B8-A8E7-AA907697D438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D84D7F-175A-41B8-A8E7-AA907697D438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D84D7F-175A-41B8-A8E7-AA907697D438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D84D7F-175A-41B8-A8E7-AA907697D438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78445E51-5892-48D5-9C0A-E5399FB871CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78445E51-5892-48D5-9C0A-E5399FB871CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78445E51-5892-48D5-9C0A-E5399FB871CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78445E51-5892-48D5-9C0A-E5399FB871CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E0615CA-619C-45DC-8E17-0375A8A287CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E0615CA-619C-45DC-8E17-0375A8A287CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E0615CA-619C-45DC-8E17-0375A8A287CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E0615CA-619C-45DC-8E17-0375A8A287CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD81C147-D568-4BF5-B696-59B9183CB8F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD81C147-D568-4BF5-B696-59B9183CB8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD81C147-D568-4BF5-B696-59B9183CB8F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD81C147-D568-4BF5-B696-59B9183CB8F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07956816-A550-4ED7-B9C1-D2A5AD92DBAB}
+	EndGlobalSection
+EndGlobal

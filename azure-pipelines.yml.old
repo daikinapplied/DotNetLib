@@ -1,0 +1,72 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+# https://medium.com/@dan.cokely/creating-nuget-packages-in-azure-devops-with-azure-pipelines-and-yaml-d6fa30f0f15e
+
+# the build will trigger on any changes to the master branch
+trigger:
+- master
+
+# the build will run on a Microsoft hosted agent, using the latest Windows VM Image
+pool:
+  vmImage: 'windows-latest' # ubuntu-latest
+
+# these variables are available throughout the build file
+# just the build configuration is defined, in this case we are building Release packages
+variables:
+  buildConfiguration: 'Release'
+
+# the build has a number of tasks to run under 1 step
+steps:
+
+# display environmental information
+- task: PowerShell@1
+  displayName: '~~~~~~~ Display Environmental Information ~~~~~~~'
+  inputs:
+    scriptType: 'inlineScript'
+    inlineScript: 'get-childitem -path env:*'
+
+# download Azure Key Vault code-signing certificate
+# SMIT Enterprise Dev/Test subscription
+# Google: yaml using certificate from azure key vault in a pipeline
+#   https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/deploy/azure-key-vault?view=azure-devops
+#   https://www.azuredevopslabs.com/labs/vstsextend/azurekeyvault/
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: c2f6f9b8-bdcb-4398-a3f5-fadedece918d 
+    keyVaultName: smit-enterprise-kv
+    secretsFilter: 'daa-code-signing'
+
+# dotnet command build, pointing to our csproj file
+- task: DotNetCoreCLI@2
+  displayName: '~~~~~~~ Building RecursiveGeek.DotNetLib.Network $(buildConfiguration) ~~~~~~~'
+  inputs:
+    command: 'build'
+    arguments: '-configuration $(buildConfiguration)'
+    projects: 'RecursiveGeek.DotNetLib.Network\RecursiveGeek.DotNetLib.Network.csproj'
+
+# dotnet pack command again pointing to the csproj file
+# the nobuild means the project will not be compiled before running pack, because its already built in the previous step
+- task: DotNetCoreCLI@2
+  displayName: '~~~~~~~ Pack RecursiveGeek.DotNetLib.Network $(buildConfiguration) ~~~~~~~'
+  inputs:
+    command: 'pack'
+    arguments: '--configuration $(buildConfiguration)'
+    packagesToPack: 'RecursiveGeek.DotNetLib.Network\RecursiveGeek.DotNetLib.Network.csproj'
+    nobuild: true
+    versioningScheme: 'off'
+
+# nuget command, nuget push
+# this will push any .nupkg files to the artifact feed
+- task: NuGetCommand@2
+  displayName: '~~~~~~~ Push NuGet RecursiveGeek.DotNetLib.Network $(buildConfiguration) ~~~~~~~'
+  inputs:
+    command: 'push'
+    feedsToUse: 'select'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal' # 'external'
+    publishVstsFeed: 'IT'
+    versioningScheme: 'off'
+    allowPackageConflicts: true # allows building the same version and not throw an error - ignores package unless version changes

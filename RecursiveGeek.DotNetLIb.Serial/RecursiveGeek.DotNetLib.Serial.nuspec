@@ -1,0 +1,24 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>RecursiveGeeks</authors>
+    <owners>$author$</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/RecursiveGeek/DotNetLib</projectUrl>
+    <repository type="git" url="https://github.com/RecursiveGeek/DotNetLib"/>
+    <icon>serial.png</icon>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags></tags>
+    <dependencies>
+      <group targetFramework="net45" /> <!-- Add a dependecy group for .NETFramework4.5 -->
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\Images\serial.png" target="serial.png" />
+  </files>
+</package>

@@ -1,0 +1,96 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# DotNetLib Open Source Azure Pipelines YAML script
+# Developed by Hans Dickel
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+pool:
+  name: WDT VM W10
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+
+variables:
+  BuildNuGet: 5.3.1
+  BuildConfiguration: 'release'
+  BuildPlatform: 'any cpu'
+  Parameters.Solution: '**\*.sln'
+  Parameters.ArtifactName: 'drop'
+  System.Debug: false
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+  
+steps:
+#- script: |
+#   set
+#   
+#  displayName: 'Display environmental variables (cmd)'
+
+#- powershell: |
+#   get-childitem -path env:*
+#   
+#  displayName: 'Disable environmental variables (PS1)'
+
+#- task: AzureKeyVault@1
+#  displayName: 'Azure Key Vault: smit-enterprise-kv'
+#  inputs:
+#    azureSubscription: 'smit-enterprise-devtest-azure-pipeline-arm'
+#    KeyVaultName: 'smit-enterprise-kv'
+
+- task: NuGetToolInstaller@0
+  displayName: '[Use NuGet $(BuildNuGet)]'
+  inputs:
+    versionSpec: $(BuildNuGet)
+
+- task: NuGetCommand@2
+  displayName: '[Restore NuGet Packages]'
+  inputs:
+    restoreSolution: '$(Parameters.Solution)'
+
+- task: VSBuild@1
+  displayName: '[Build Solution]'
+  inputs:
+    solution: '$(Parameters.Solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+# Based on .NET Core template (there are assumed defaults)
+- task: VSTest@2
+  displayName: '[Test Assemblies]'
+  inputs:
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: PowerShell@2
+  displayName: '[Build .NET Framework NuGet packages]'
+  inputs:
+    targetType: filePath
+    filePath: '.\NuGetPackage.ps1'
+
+- task: PowerShell@2
+  displayName: '[Stage Pipeline Artifacts]'
+  inputs:
+    filePath: '.\NuGetStage.ps1'
+    arguments: '$(Build.ArtifactStagingDirectory)'
+
+#- task: PowerShell@2
+#  displayName: 'PowerShell Script'
+#  inputs:
+#    targetType: filePath
+#    filePath: '.\NuGetAll.ps1'
+#    arguments: '$(recursivegeek-dotnetlib-nuget-apikey) $(daa-code-signing-subject) "subject"'
+
+# publishLocation: container, filePath
+- task: PublishBuildArtifacts@1
+  displayName: '[Publish Artifacts to Releases]'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(Parameters.ArtifactName)'
+    publishLocation: 'Container' 
+  condition: succeededOrFailed()
+  
+# ~End~
