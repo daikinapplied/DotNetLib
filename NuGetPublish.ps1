@@ -40,7 +40,7 @@ Function PublishNuGet
 			$newestPackage = Get-ChildItem "$searchFile" -File -ErrorAction Stop | Sort-Object LastAccessTime -Descending | Select-Object -First 1
 			if ($newestPackage)
 			{
-				Write-Host "Found: $newestPackage.FullName"
+				Write-Host "Found: $newestPackage"
 				break
 			}
 		}
@@ -55,26 +55,26 @@ Function PublishNuGet
 		# NuGet 5.3.1 and earlier that supports signing defaults to "CurrentUser" for the store location
 		if ($certIdType.ToLower() -eq "subject")
 		{
-			nuget sign $newestPackage.FullName -CertificateStoreLocation "LocalMachine" -CertificateSubjectName $certIdentifier -Timestamper $timeServer
+			nuget sign $newestPackage -CertificateStoreLocation "LocalMachine" -CertificateSubjectName $certIdentifier -Timestamper $timeServer
 		}
 		else
 		{
-			nuget sign $newestPackage.FullName -CertificateStoreLocation "LocalMachine" -CertificateFingerprint $certIdentifier -Timestamper $timeServer
+			nuget sign $newestPackage -CertificateStoreLocation "LocalMachine" -CertificateFingerprint $certIdentifier -Timestamper $timeServer
 		}
 		
 		try
 		{
-			nuget push $newestPackage.FullName -Source $nugetServer -ApiKey $apiKey
+			nuget push $newestPackage -Source $nugetServer -ApiKey $apiKey
 		}
 		catch 
 		{
-			Write-Host "!! Issue encountered pushing NuGet package $newestPackage.FullName to $nugetServer"
+			Write-Host "!! Issue encountered pushing NuGet package $newestPackage to $nugetServer"
 		}
 
     }
     else
     {
-        Write-Host "Unable to find a package to deploy"
+        Write-Host ":( Unable to find a package to deploy"
     } 
 }
 
