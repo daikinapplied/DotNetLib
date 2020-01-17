@@ -25,22 +25,22 @@ $nugetServer="https://www.nuget.org/api/v2/package"
 
 Function PublishNuGet
 {
-    param ([string]$project)
+    param ([string]$project, [string]$rootFolder)
 
 	Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     Write-Host "~~ Publish: $project ~~"
 
-	$prodLocations=@("release","prd")
+	$prodLocations=@("Release","prd")
 	foreach ($prodBits in $prodLocations)
 	{
 		Try
 		{
-			$searchFile = "$project\bin\$prodBits\*.nupkg"
+			$searchFile = $rootFolder + $project + "\bin\" + $prodBits + "\*.nupkg"
 			Write-Host "Searching: $searchFile"
 			$newestPackage = Get-ChildItem $searchFile -File -ErrorAction Stop | Sort-Object LastAccessTime -Descending | Select-Object -First 1
 			if ($newestPackage)
 			{
-				Write-Host "Found: $newestPackage"
+				Write-Host "Found: $newestPackage.FullName"
 				break
 			}
 		}
@@ -90,6 +90,12 @@ else
 	Write-Host "(NuGet ApiKey passed via command-line)"
 }
 
+if ($apiKey.Length -eq 0)
+{
+	Write-Host ":( ApiKey not specified.  Discontinuing."
+	exit 1
+}
+
 if ($certIdentifier.Length -eq 0)
 {
 	$certIdentifier = Read-Host -Prompt "Enter your NuGet Certificate Identifier ($certIdType)"
@@ -99,22 +105,26 @@ else
 	Write-Host "(NuGet Certificate '$certIdType' passed via command-line)"
 }
 
-if ($apiKey.Length -ne 0)
+if ($certIdentifier.Length -eq 0)
 {
-	PublishNuGet "Daikin.DotNetLib.Application"
-	PublishNuGet "Daikin.DotNetLib.Data"
-	PublishNuGet "Daikin.DotNetLib.DotNetNuke"
-	PublishNuGet "Daikin.DotNetLib.Facebook"
-	PublishNuGet "Daikin.DotNetLib.Security"
-	PublishNuGet "Daikin.DotNetLib.Network"
-	PublishNuGet "Daikin.DotNetLib.Windows"
-	PublishNuGet "Daikin.DotNetLib.Serial"
-}
-else
-{
-	Write-Host ":( ApiKey not specified.  Discontinuing."
+	Write-Host ":( Certified Identifer not specified.  Discontinuing."
 	exit 1
 }
+
+$startupFolder = Get-Location
+$scriptFolder = $PSScriptRoot
+
+Write-Host "Script Startup Folder: $startupFolder"
+Write-Host "This Script Folder: $scriptFolder"
+
+PublishNuGet "Daikin.DotNetLib.Application", $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Data", $scriptFolder
+PublishNuGet "Daikin.DotNetLib.DotNetNuke", $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Facebook", $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Security", $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Network", $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Windows", $scriptFolder
+PublishNuGet "Daikin.DotNetLib.Serial", $scriptFolder
 
 exit 0
 # ~End~
@@ -122,8 +132,8 @@ exit 0
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUe31Ah0kS5DpYdAXewkk97RhG
-# 7xqgghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUcxMWpUMKgeTUDztUxmo9ZbxJ
+# zxigghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -230,25 +240,25 @@ exit 0
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFGIxKM7ZZx8qtBsNh4TpshvIi8ZsMA0GCSqGSIb3DQEBAQUABIIBAKgl
-# TGSei36SmsUfTrGQBgm2uv61HuN9YE8WvriDeQfIFdcbvk0r4K3iGvBGIf1gwbrx
-# pRNyAHdyrLG2OUQmO3cIWWk2g7eng29hibUxptrJ7MkPEx/NaNDwB9agX/iEphHT
-# CLt3WpDcS2A3k+B3eSsLGXnWnzJbSFL4z1/qBwWL0Hm3fGmmqNsl2coTpFWSObB8
-# oJ2WI4VFsiCRvsJvz4lBLfSd9LFo878DqmGmBsJawWL0ylU6StUHsGGikg3x8gvB
-# QuT1NrWExne572ejjckzfbFaqJAjAbG51mhK3PWj/DyJt5yDtawUTEsOYCbJoTQW
-# 7gn8Zs4mR9RPpswTE8ChggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFMuIo0S0nPQhEjaM8UMF2ptjgW5dMA0GCSqGSIb3DQEBAQUABIIBAHlx
+# n3A3Xq8X2BGRt8xlYnfZwBwCrvLmXg8XnQBNHHIKGcgwfK2JXea+tMCcmoDAv5Bq
+# Qz0pUUzXXot7VXOB3dcXCbXnk33K4DYTKg8qsLKFqTFRXgGLUBq7Roja2MqfJLYG
+# 4o11cubM+ya0kEnw03TXbVtP14jZRq4HfWnhgEMXxWFytoTqD3rePNT44ByyYML+
+# w5JsPedQXl0jh6S5fEXn64X/WCU4ZTC6K969gjauQBVdXWYYL7gsnAcTFjWAIHFn
+# XuIHSAZyUCaVrWLzpNS4I0i9EGGI+7pK+Kfj6d2WPEK91UQBml20QwySXSY49ZKz
+# ALqS2W8eCuTqydHWRzChggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MjIwNzI2WjAjBgkqhkiG9w0BCQQxFgQUT/P2
-# U+TJ6rMRMdtFr/zkwGUTCKcwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MjMyMDMyWjAjBgkqhkiG9w0BCQQxFgQUyuZZ
+# Lzwryo8ayrMb15W+fpRf6+AwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAEOU5ooybXvKsmolPIPyrCd8p9yAIHLf8stGVB6CIW+T6ZO+aEmiOLHNSTkx
-# RB+vDxNuhkLDkn1NF9QUmtFjDxiXf2Hv53vWIO1gR+zdY6mJ/pgFUsWaiEQXefTy
-# qWS37g64IHrkVsIcwYXAeNtYBjtZGXRJ+JeJ5KzQw+z1TRJvH1ixPxoTs6T030HX
-# gcV2PrgAFiGFQe4ertULCK1E5dvOpWLPiqBB573QFt6oAUhLbcOib2XD07WBdH4J
-# /LcUBnCwP5Tuh716wCKBZhtKjKNS96Ogfzs9YE3qMHqfIukzvd4sRrRex4BApR+o
-# 8x22AWUPZaRowU5kvJE+wsQqgI4=
+# BIIBAExxUBRR8mA7Jzyxfa5ki/BBMZ3tJmA/mQV54nFlHtzxAC+gcwc5llr6NoLG
+# AxnM/gCaUYHSyOjLSyAPFs98qF9Iyd0+XPw78o5NxmD7+bUmAIDZ3pa3IevQaAyA
+# YGXcbpxmPCVOj6wvz+LwV504Zw+yIdVt/dzYH/JUQ1nX5W1/sNOyJM56vgGiX+6Q
+# IaFHpqSgFtDTZkKaTp0g7FsNWlVEt1Sp0LAtFtEOA2BXPNi2W7oEXpUF+LGC1HQb
+# 6gckhJbkkq9YVqp1Bf2pvf5RjFA2LklaslJLOdZqHOdA1EZYNceoNS8Si6CAUG88
+# eK6by8B65ItmTvjcBzZpZ9UqbsQ=
 # SIG # End signature block
