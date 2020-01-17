@@ -1,21 +1,27 @@
 param(
 	[string]$apiKey="", 
 	[string]$certIdentifier="",
-	[string]$certIdType="subject")
+	[string]$certIdType="subject"
+)
 
+# ~~~[Introduce]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Write-Host "                                                        "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 Write-Host "DotNetLib NuGet Publish Tool                            "
 Write-Host "Developed by Daikin Applied                             "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-
-Write-Host "This tool digitally signs via subject (default) or fingerprint, and publishes to NuGet.org."
-Write-Host ""
+Write-Host "                                                        "
+Write-Host "? This tool digitally signs via subject (default) or fingerprint, and publishes to NuGet.org."
+Write-Host
 
 # Digitally Signing Timestamp Server for NuGet Packages (nupkg)
 #http://timestamp.verisign.com/scripts/timstamp.dll # <-- Causes the error "ASN1 bad tag value met" when used with nupkg
 #http://timestamp.comodoca.com?td=sha256            # <-- works with nupkg
 $timeServer="http://timestamp.comodoca.com?td=sha256"
 $nugetServer="https://www.nuget.org/api/v2/package"
+
+# ~~~[Functions]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Function PublishNuGet
 {
@@ -24,14 +30,25 @@ Function PublishNuGet
 	Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     Write-Host "~~ Publish: $project ~~"
 
-	Try
-    {
-        $newestPackage = Get-ChildItem $project\bin\Release\*.nupkg -File -ErrorAction Stop | Sort-Object LastAccessTime -Descending | Select-Object -First 1
-    }
-    Catch [System.Exception]
-    {
-        $newestPackage = $null
-    }
+	$prodLocations=@("release","prd")
+	foreach ($prodBits in $prodLocations)
+	{
+		Try
+		{
+			$searchFile = "$project\bin\$prodBits\*.nupkg"
+			Write-Host "Searching: $searchFile"
+			$newestPackage = Get-ChildItem $searchFile -File -ErrorAction Stop | Sort-Object LastAccessTime -Descending | Select-Object -First 1
+			if ($newestPackage)
+			{
+				Write-Host "Found: $newestPackage"
+				break
+			}
+		}
+		Catch [System.Exception]
+		{
+			$newestPackage = $null
+		}
+	}
 
     if ($newestPackage)
     {
@@ -59,8 +76,10 @@ Function PublishNuGet
     {
         Write-Host "Unable to find a package to deploy"
     } 
-	Write-Host ""
+	Write-Host
 }
+
+# ~~~[Main Body]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if ($apiKey.Length -eq 0)
 {
@@ -93,7 +112,8 @@ if ($apiKey.Length -ne 0)
 }
 else
 {
-	Write-Host "ApiKey not specified.  Discontinuing."
+	Write-Host ":( ApiKey not specified.  Discontinuing."
+	exit 1
 }
 
 exit 0
@@ -102,8 +122,8 @@ exit 0
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUWfrvUGBj1ZUafcllcM4CI2fe
-# JLmgghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUe31Ah0kS5DpYdAXewkk97RhG
+# 7xqgghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -210,25 +230,25 @@ exit 0
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFKxBJypPZ9tkDJZWtgjR/57H+igsMA0GCSqGSIb3DQEBAQUABIIBADzo
-# n8d3h9uxitNFPA/UG8ru/VydMgQM33lyfZ87MCWmOemo78pAQDg6X98qDWs4e4Se
-# XZemIFXzWA7dkBjuHXcx8tM7lH/GGnwCAu+jPyecYHF79O14TUE5neiBad8jXkR3
-# rISxt0CvEDOmR03xwEIzyD5LpTYqfFJkmfWfNBUJ3vmyKlJspmi19SHQJ6W+CPkj
-# KLzc+t6rwfCQvNTxz+ySSrbwGAx8ur52fI5T+BkBxum0VWtiDVasfvUTQgQ3sBic
-# sanPpACo8aafDZ5nz1RMi05hVfHqenpdLoYZQRzfXc9Tuyky9xw3Zy9/ijVI8Lhy
-# FvBjKA9+KFXF9ztliCahggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFGIxKM7ZZx8qtBsNh4TpshvIi8ZsMA0GCSqGSIb3DQEBAQUABIIBAKgl
+# TGSei36SmsUfTrGQBgm2uv61HuN9YE8WvriDeQfIFdcbvk0r4K3iGvBGIf1gwbrx
+# pRNyAHdyrLG2OUQmO3cIWWk2g7eng29hibUxptrJ7MkPEx/NaNDwB9agX/iEphHT
+# CLt3WpDcS2A3k+B3eSsLGXnWnzJbSFL4z1/qBwWL0Hm3fGmmqNsl2coTpFWSObB8
+# oJ2WI4VFsiCRvsJvz4lBLfSd9LFo878DqmGmBsJawWL0ylU6StUHsGGikg3x8gvB
+# QuT1NrWExne572ejjckzfbFaqJAjAbG51mhK3PWj/DyJt5yDtawUTEsOYCbJoTQW
+# 7gn8Zs4mR9RPpswTE8ChggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MTgyMjEzWjAjBgkqhkiG9w0BCQQxFgQUuH3s
-# w0FZxXsXayEDA6aZzzkL8fswgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MjIwNzI2WjAjBgkqhkiG9w0BCQQxFgQUT/P2
+# U+TJ6rMRMdtFr/zkwGUTCKcwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAJ3Lv6ZDuvxubaupXoL5nCnHA3gx9C/OZNUmpJ2T5tQpjAdypZPwmEOYp4rG
-# 4n/6+iZZiG3ILUu8UhOfrVz6xvIerpM4UUoaPnyrSebcofy7haVMsIdGk5AfVZ9U
-# g/61Vni8sDZ9eRMhSMEXaOXeGW8wgF+Mf0oVaYzEUR032l4+2At76IspSjNuBeZM
-# 7tNH2hCqtjfwWkTQps78GpCEhm7V6sybhAkBwLEfVN+vlMR67mNhCleI1d2Bl7Fk
-# tKQTyJg36/o8x+vm0B1d6NAwCIdCLE1YanBWHaAWhQfKQbh3fjnUnVrpBFlIgpkY
-# c9pMLKUqtEQyW+OgIG42RifKTLc=
+# BIIBAEOU5ooybXvKsmolPIPyrCd8p9yAIHLf8stGVB6CIW+T6ZO+aEmiOLHNSTkx
+# RB+vDxNuhkLDkn1NF9QUmtFjDxiXf2Hv53vWIO1gR+zdY6mJ/pgFUsWaiEQXefTy
+# qWS37g64IHrkVsIcwYXAeNtYBjtZGXRJ+JeJ5KzQw+z1TRJvH1ixPxoTs6T030HX
+# gcV2PrgAFiGFQe4ertULCK1E5dvOpWLPiqBB573QFt6oAUhLbcOib2XD07WBdH4J
+# /LcUBnCwP5Tuh716wCKBZhtKjKNS96Ogfzs9YE3qMHqfIukzvd4sRrRex4BApR+o
+# 8x22AWUPZaRowU5kvJE+wsQqgI4=
 # SIG # End signature block

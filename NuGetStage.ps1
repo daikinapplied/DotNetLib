@@ -1,19 +1,29 @@
 param([string]$buildArtifactStagingDirectory)
 
+Write-Host "                                                        "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-Write-Host "DotNetLib NuGet Staging Tool                            "
+Write-Host "DotNetLib Azure Pipelines Artifacts Staging Tool        "
 Write-Host "Developed by Daikin Applied                             "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+Write-Host "                                                        "
+Write-Host "? Move NuGet Packages from Stage to Artifacts Locations."
+Write-Host "                                                        "
+
+$loc = Get-Location
+$scriptFolder = $PSScriptRoot
+
+Write-Host "Script Startup Folder: $loc"
+Write-Host "This Script Folder: $scriptFolder"
+Write-Host "Artifacts Staging Folder: $buildArtifactStagingDirectory"
 
 if ($buildArtifactStagingDirectory -ne 0)
 {
-	Write-Host "Artifact Staging Directory: $buildArtifactStagingDirectory"
-	xcopy .\NuGet*.ps1 "$buildArtifactStagingDirectory" /s /f /y
-	xcopy .\Daikin*.nupkg "$buildArtifactStagingDirectory" /s /f /y
+	robocopy ".\" "$buildArtifactStagingDirectory" NuGet*.ps1 /NP
+	robocopy ".\" "$buildArtifactStagingDirectory" Daikin*.nupkg /S /NP
 }
 else
 {
-	Write-Host "No parameters specified"
+	Write-Host ":( No parameters specified"
 	exit 1;
 }
 
@@ -23,8 +33,8 @@ exit 0
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUgy4eoIYlBy71nicuHhecv/Uc
-# ErigghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQU5XJGO7R54+HrSnYU/yesy0uE
+# 89egghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -131,25 +141,25 @@ exit 0
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFOU7Elm+iWTsCD+kX1ss5nvSzC4NMA0GCSqGSIb3DQEBAQUABIIBABDJ
-# ZDAG/NOc6hTrZMpC9TFauYgT0ATBgZhA2qUKbDqS6D65eonvPbNpG1roHjzTwKTw
-# OQI88kLn5D4tzitIwynV5DDdyG/JTEY+VkKd2JJjBBK60Gf8v/nUJEhguDrIskmE
-# OePs0NfjoPlVDUtfRlER9XumG9hpSoYxaPgkmqdJ73eYbgT9W0sULoIZqk1JCkhl
-# 4ZxtPtPNzqQvQlYodd0Hsv1+CKc67hif0pPLik7dfZVfrr5GfFLsolYxwikVv6hI
-# JqwLKH0lqIEWpxAtZdbXkCIFab1L7SoQhafcOyE5ee+NeyMBQEgcgLCQhAMStsUT
-# nIKgvkhxqv+4c6hFWnGhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFHbXAwwNldEMlYUxYNDKC6/C3fSoMA0GCSqGSIb3DQEBAQUABIIBAI6H
+# 8Jnj+fx7m7go63KWy1pw2MoiQz4xKJXQNoLnKgJ51BsGFitEYkalWctWu40Nb3ky
+# nR2SmgohvgiXIO38+vcGppY2BS3L55GUbPLZfma1ojDvs62Hv7NnYeymegM2jVhZ
+# bBmgPdTd1ZVNwI0oTmmt/xoDlhr24vo7XmyAe6lmBF6RR2WNQzEcDsGI03X8U3VR
+# 3c+LjxHpVMJT/OdWi9hZd8XhJ/jpwGw6CB884AkkaTN2q1vw1qoQ42uCG4Nnu1IP
+# FOvCyUZjEqqUrYb3VNQIxXi0RkpmN9Fvj/KD9fbLIYy8VPRMQ88j60yCKzODnyzQ
+# P34wrW3IjI/DrLe03PyhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MTgyMzM2WjAjBgkqhkiG9w0BCQQxFgQU3tug
-# A0d8foipMaa2eK4Qf+95AiMwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MjIzMTU4WjAjBgkqhkiG9w0BCQQxFgQUEhQm
+# vaCeP7LUrB37s7SXgxrV6pcwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAIIpV6BdoDkmf5n8tBAaX/S95CaLsN2s6ULsed5F4QFKK9hmdUYGs04AXlIX
-# iTD61H2fYCwCswIDQJgEQhx6plUVhB9TWXDgvwuBDVf5KS2cfM+ijvI0MVeLfR9B
-# KVVV9ZaiAS5lE8uqtxuZddxZ6C8myrmdPJKgSQvjXLMKonXrxrI18MM64AQdZ2NU
-# sZ4YZYlqXIJKqzve1lzq7XGJlbvR57JN6FiXrQ/NV/+ugG3DzsgCXbx6kKvxRvwR
-# oXj6f7/qjBV7Ze2MM4v7dCUlgLly3linPWlkXT4lQhzu/piuw9xPvXh1GjYkM5AH
-# 9hwgxxyffoZFyg5A10G2IgcwWQ8=
+# BIIBADisyPBJYjnvqWNyn6bIpjsTq22tvgr9yz/BaBMKI+Ifp4DOhgOXuJOgo4NF
+# SnGuRfK7YwkBubAe8VXll9jl0NqXC/gjID1GV+0NyakFAq1apPqJGANsbjPEOeVO
+# uTp9bvJUdvLeoREWjRR9RYHpg65sn+jVFI3aG7HNbMgF8wvB4vAf3xgopmVSiucF
+# XJNZXC5qS0IYJNvoZ4IGQpx2OorgG9le0pWroPKtiLudbEFnB2j8Re4EP/skAin4
+# VFFGhWrppNS6lxX5ISeGH0Aer0/mMrui5Ys2iy58R4WqL/1UU/Fh80uk3VZVFLWj
+# eHi/ObRCrWlj+tbSfiYz22f4AxM=
 # SIG # End signature block

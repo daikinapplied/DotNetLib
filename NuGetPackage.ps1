@@ -1,33 +1,63 @@
+Write-Host "                                                        "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 Write-Host "DotNetLib NuGet Package Tool                            "
 Write-Host "Developed by Daikin Applied                             "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-
-Write-Host "This tool creates a released version of .NET Framework NuGet packages, digitally signs it (via subject or fingerprint), and"
-Write-Host "posts it to NuGet.org."
-Write-Host ""
+Write-Host "                                                        "
+Write-Host "? Create .NET Framework NuGet packages.                 "
+Write-Host "                                                        "
+Write-Host
 
 Function BuildNuGet
 {
 	param ([string]$project)
 
-	# https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference
 	Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 	cd $project
 	Write-Host "~~ Build: $project ~~"
-	Write-Host ""
+	Write-Host
 
-	$versionInfo = (Get-Item bin\Release\$project.dll).VersionInfo
-	$version = $versionInfo.FileMajorPart.ToString() + "." + $versionInfo.FileMinorPart.ToString() + "." + $versionInfo.FileBuildPart.ToString()
-	if ( $versionInfo.FilePrivatePart.ToString() -ne "0" ) 
-	{ 
-	   $version = $version + "." + $versionInfo.FilePrivatePart.ToString()
+	$prodLocations = @("release","prd")
+	$prodBits = ""
+	foreach ($prodBits in $prodLocations)
+	{
+		try
+		{
+			$searchFile = "bin\$prodBits\$project.dll"
+			Write-Host "Searching: $searchFile"
+			$dllFile = Get-Item $searchFile
+			if ($dllFile)
+			{
+				Write-Host "Found: $dllFile"
+				$versionInfo = $dllFile.VersionInfo
+				break
+			}
+		}
+		catch [System.Exception]
+		{
+			$versionInfo = $null
+		}
 	}
+
+	if ($versionInfo)
+	{
+		$version = $versionInfo.FileMajorPart.ToString() + "." + $versionInfo.FileMinorPart.ToString() + "." + $versionInfo.FileBuildPart.ToString()
+		if ( $versionInfo.FilePrivatePart.ToString() -ne "0" ) 
+		{ 
+		   $version = $version + "." + $versionInfo.FilePrivatePart.ToString()
+		}
 	
-	nuget pack $project.nuspec -Version $version -Prop Configuration=Release
-	Move-Item "$project.$version.nupkg" "bin\Release\" -Force
-	cd ..
-	Write-Host ""
+		nuget pack $project.nuspec -Version $version -Prop Configuration=Release
+		Move-Item "$project.$version.nupkg" "bin\$prodBits\" -Force
+		cd ..
+		Write-Host
+	}
+	else
+	{
+		cd ..
+		Write-Host ":( Unable to find a package to deploy"
+		exit 1
+	}
 }
 
 # ~~ .NET Framework NuGet packaging (.NET Standard and .NET Core projects can build this automatically in Visual Studio 2017/2019) ~~
@@ -41,8 +71,8 @@ exit 0
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUFWzZkITo3YubZpa4FgxC4izN
-# ECugghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUY3Rs+Si+euVCk8A6loSm8Ekl
+# esGgghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -149,25 +179,25 @@ exit 0
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFPaHHr6RxsOoOXnvs6KwRLkRqOmNMA0GCSqGSIb3DQEBAQUABIIBAG7I
-# RQriFdpJe5MWP2CyB+tEHJM8Hgwbo/ee3eI1RmFIp+8Sm+7EcDpzI3nmG9FQceV7
-# VtM/8Jpz7yWX0oBLuzapuT+0hKM9QGr2YUVUZ9RliQlBcfoWGRh5LTZVNEVd6uzs
-# 4Z9aJ2zgSqoOmdPHS1xPnlobXd4sbcQqAhDpIRYnObugZHMbOCCUVHRuAhRE9jTs
-# U7Bqf1VxDnSnV+DzgLslIVlOguTMq7AIxPuBVqAd1kwnEFzKBe4oFwF2XONlaNur
-# hErEU158AHVizr162cgn0kceaRQ31JtUhFklfjB55QX2S4IFxEc4xdiSWvCD4sDg
-# Wpd8Cane+6LEBQAfa9uhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFHzd3p2zKyBvYK7RWPP6ZwxBtEKQMA0GCSqGSIb3DQEBAQUABIIBABY+
+# IuAkfl2YzSDRyKtN0e42v+JjvebFxoh20k3ui5TEt25pdFCwSfsTGn7lYGXdn3oR
+# 7izcXPqCNdVaTL7bo6/okl4PLxCZY2xhIIZFJdHqto3/YhI7WH8oSG8cqysrJwlZ
+# YCBkXRjLFVsv823XOw5i8kq+GmDwTktd2c+olKMFtJpy+3s4UvfQlwRIl6+EZ5/S
+# A5Nd4EvuAUjeLNKHTqblrQmIVjubOC009vawJ6T2+0pjXVusOhZ8Jz2Xu8mbBXdc
+# 2WaMsVjyDMQdfIlbsj03JgipQi8HwrD7YQ7VB+haHqAGkGkMR3KDksgq6M8WaAVB
+# JsFckGbVKG4tRfuF1gOhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MTgyMjAyWjAjBgkqhkiG9w0BCQQxFgQUMP2D
-# Yo5XdO9d6x6qdVzGc4sZcwMwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MjIzMjEzWjAjBgkqhkiG9w0BCQQxFgQUHK3n
+# WLk2VtjRnjKYZlO/8eTMlSMwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAIVW/JEfxvp5Acm4TORNQsSnLQ8TEAaMUiq8zZ3i9PiDBn9Sy7+DYdBLnR8L
-# qX5TJ0p/3ZdKDjTON9RQS7qASQgbCOWHFRkBd1vuYcgqPrsdQvpAtxceJWjJ1z2S
-# igR1oCrYyXiTUde0jyccA8fHN2aqEvPGCnLe8pu5NxyPayMDOO+hiEwbhYmcvTsd
-# lxAGlgyTqRdK4lY64IJLjyXzIekyDRdgB/V9svS1mB0FjuIeWnD2flSvyGx2hlyp
-# SzCaFjA6bp8Nl4FqUncp1m02XgWmlVAi9qjdYWMywMwI7w1rjqdnf3k6wkEkpUYO
-# tZg1s6Ce9rLmIUwOx+vtodNgyjo=
+# BIIBAJb3yLB/1nv4oHTLuhbVE43/23U63p65+hvIl0eFR5FCmxgty8GA+V2NInkF
+# ExTLIqD1OSMKbkE9BXKCyzNYPxdSHGJYs0d0Z4PlYelTmEnZG5uWA3ETAs2SJB7P
+# ZmG+AMQy7PDkEcQi1b1akvvDMAIoCXxID5GyP/CIe7KU+Coss8LtXemJBXDOWsls
+# huQ8nEXBVHZOvd0K4iiLE9JsRaPWMlh/YouT40+tVV1LjK6TJnSNEEabnjH0/Qie
+# UrEHbXi77pt6P1uZSxskpc2beG3kkoReT5ir6YsVyd3saXjKP7AhTRyjls5vyBmY
+# Sf+t49t/46kyvivZrq9jy3YkESA=
 # SIG # End signature block
