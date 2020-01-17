@@ -34,7 +34,7 @@ namespace Daikin.DotNetLib.DotNetNuke
         {
             try
             {
-                return PortalController.Instance.GetCurrentPortalSettings().PortalId;
+                return PortalController.Instance.GetCurrentSettings().PortalId;
             }
             catch (Exception)
             {
