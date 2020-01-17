@@ -1,22 +1,20 @@
 # DotNetLib Projects
-This project has been moved to the DaikinApplied/DotNetLib GitHub repo, using Daikin.DotNetLib.* projects, namespaces, and NuGet package names.  Updates will no longer occur on the RecursiveGeek.DotNetLib repo.  This change allows for increased management and visibility to Daikin.  This still encourages support by all those that wish to do such, regardless of being affiliated with Daikin or Daikin Applied.  All RecursiveGeeks are acknowledged!  :-)
-
-<img src="Images/DotNetLib.png" width="96" align="right"/>The following specific projects are available, used to create corresponding NuGet packages for NuGet.org.  Read their associated readme file for specific details.
+The following specific projects are available, used to create corresponding NuGet packages for NuGet.org.  Read their associated readme file for specific details.
 
 | Library                                                                           | NuGet Package (and specific README)                                                                                                                                                            |
 |-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|<img src="RecursiveGeek.DotNetLib.Application/Images/application.png" width="64"/> | [RecursiveGeek.DotNetLib.Application](RecursiveGeek.DotNetLib.Application/README.md) are basic functions to generically assist with applications                                               |
-|<img src="RecursiveGeek.DotNetLib.Data/Images/data.png" width="64"/>               | [RecursiveGeek.DotNetLib.Data](RecursiveGeek.DotNetLib.Data/README.md) are basic classes to assist with specific data types                                                                    |
-|<img src="RecursiveGeek.DotNetLib.DotNetNuke/Images/dotnetnuke.png" width="64"/>   | [RecursiveGeek.DotNetLib.DotNetNuke](RecursiveGeek.DotNetLib.DotNetNuke/README.md) supports Module Development on DNN (formerly DotNetNuke), the C# open source Content Management System (CMS)|
-|<img src="RecursiveGeek.DotNetLib.Facebook/Images/facebook.png" width="64"/>       | [RecursiveGeek.DotNetLib.Facebook](RecursiveGeek.DotNetLib.Facebook/README.md) supports Facebook API calls to pull content for a single source of information                                  |
-|<img src="RecursiveGeek.DotNetLib.Security/Images/security.png" width="64"/>       | [RecursiveGeek.DotNetLib.Security](RecursiveGeek.DotNetLib.Security/README.md) provides security helper to make it easier to encrypt and decrypt data                                          |
-|<img src="RecursiveGeek.DotNetLib.Network/Images/network.png" width="64"/>         | [RecursiveGeek.DotNetLib.Network](RecursiveGeek.DotNetLib.Network/README.md) are helpers for making Web Api calls (typically JSON-based), SMTP, Networking, etc. calls                         |
-|<img src="RecursiveGeek.DotNetLib.Windows/Images/windows.png" width="64"/>         | [RecursiveGeek.DotNetLib.Windows](RecursiveGeek.DotNetLib.Windows/README.md) are helpers for Windows-based applications                                                                        |
-|<img src="RecursiveGeek.DotNetLib.Serial/Images/serial.png" width="64"/>           | [RecursiveGeek.DotNetLib.Serial](RecursiveGeek.DotNetLib.Serial/README.md) are Windows-based USB and Serial port helpers for Windows-based applications                                        |
-|<img src="RecursiveGeek.DotNetLib.Core.Tests/Images/debugging.png" width="64"/>    | [RecursiveGeek.DotNetLib.Core.Tests](RecursiveGeek.DotNetLib.Core.Tests/README.md) are .NET Core xUnit Unit Tests, serves as coding samples                                                    |
+|<img src="Daikin.DotNetLib.Application/Images/application.png" width="64"/> | [Daikin.DotNetLib.Application](Daikin.DotNetLib.Application/README.md) are basic functions to generically assist with applications                                               |
+|<img src="Daikin.DotNetLib.Data/Images/data.png" width="64"/>               | [Daikin.DotNetLib.Data](Daikin.DotNetLib.Data/README.md) are basic classes to assist with specific data types                                                                    |
+|<img src="Daikin.DotNetLib.DotNetNuke/Images/dotnetnuke.png" width="64"/>   | [Daikin.DotNetLib.DotNetNuke](Daikin.DotNetLib.DotNetNuke/README.md) supports Module Development on DNN (formerly DotNetNuke), the C# open source Content Management System (CMS)|
+|<img src="Daikin.DotNetLib.Facebook/Images/facebook.png" width="64"/>       | [Daikin.DotNetLib.Facebook](Daikin.DotNetLib.Facebook/README.md) supports Facebook API calls to pull content for a single source of information                                  |
+|<img src="Daikin.DotNetLib.Security/Images/security.png" width="64"/>       | [Daikin.DotNetLib.Security](Daikin.DotNetLib.Security/README.md) provides security helper to make it easier to encrypt and decrypt data                                          |
+|<img src="Daikin.DotNetLib.Network/Images/network.png" width="64"/>         | [Daikin.DotNetLib.Network](Daikin.DotNetLib.Network/README.md) are helpers for making Web Api calls (typically JSON-based), SMTP, Networking, etc. calls                         |
+|<img src="Daikin.DotNetLib.Windows/Images/windows.png" width="64"/>         | [Daikin.DotNetLib.Windows](Daikin.DotNetLib.Windows/README.md) are helpers for Windows-based applications                                                                        |
+|<img src="Daikin.DotNetLib.Serial/Images/serial.png" width="64"/>           | [Daikin.DotNetLib.Serial](Daikin.DotNetLib.Serial/README.md) are Windows-based USB and Serial port helpers for Windows-based applications                                        |
+|<img src="Daikin.DotNetLib.Core.Tests/Images/debugging.png" width="64"/>    | [Daikin.DotNetLib.Core.Tests](Daikin.DotNetLib.Core.Tests/README.md) are .NET Core xUnit Unit Tests, serves as coding samples                                                    |
 
 # Introduction
-<img src="Images/RecursiveGeek.png" width="64" align="right" alt="RecursiveGeek Logo"/>
+<img src="Images/DotNetLib.png" width="96" align="right" alt="DotNetLib Logo"/>
 These .NET Standard, Core, and Framework libraries are a collection of work intented to share (give back), collaborate, and learn.
 
 # Getting Started
@@ -73,17 +71,10 @@ Add *codesign.bat* to your Windows System PATH:
 
 After updating the PATH, it is recommended you restart your computer or restart all PowerShell, Command Prompt, and applications so they are able to access the updated path.
 
-# Contributors
-- Hans Dickel (a RecursiveGeek)
-- Aeriden LLC (RecursiveGeek Consulting)
-- Daikin Applied Americas Inc (full of RecursiveGeeks that use significantly and contribute feedback)
-
 # Contribution
-Developers are welcome to strength their inner recursive geekness to make this better.  
+While primarily (at this point) done by the Daikin Applied Web Development Team, all .NET developers are welcome to strength their inner geekness to make this better. 
 
-This is being managed under Aeriden LLC for the sake of organizational representation and contribution.
-
-The Code Signing is being done under Daikin Applied Americas Inc as the initial biggest consumption benefactor of these libraries.
+Original development contribution by Hans Dickel as a way to give back to the development community and share his recursivegeek-iness!
 
 # License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).

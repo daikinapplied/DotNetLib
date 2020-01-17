@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # DotNetLib Open Source Azure Pipelines YAML script
-# Developed by Hans Dickel
+# Developed by Daikin Applied
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 pool:
   name: WDT VM W10
@@ -82,7 +82,7 @@ steps:
 #  inputs:
 #    targetType: filePath
 #    filePath: '.\NuGetAll.ps1'
-#    arguments: '$(recursivegeek-dotnetlib-nuget-apikey) $(daa-code-signing-subject) "subject"'
+#    arguments: '$(daikinapplied-dotnetlib-nuget-apikey) $(daa-code-signing-subject) "subject"'
 
 # publishLocation: container, filePath
 - task: PublishBuildArtifacts@1

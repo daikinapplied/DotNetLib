@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon>Images\data.ico</ApplicationIcon>
+    <Version>1.3.5</Version>
+    <Authors>Web Development Team and Contributors</Authors>
+    <Company>Daikin Applied Americas Inc</Company>
+    <Product>Daikin.DotNetLib</Product>
+    <Copyright>Copyright © 2016-2020</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/DaikinApplied/DotNetLib</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryUrl>https://github.com/DaikinApplied/DotNetLib</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>data.png</PackageIcon>
+    <Description>Data oriented helper library to add centralized generic application tools support</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Images\data.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="codesign.bat &quot;$(TargetPath)&quot;" />
+  </Target>
+
+</Project>
