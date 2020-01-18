@@ -55,20 +55,21 @@ Function PublishNuGet
 		# NuGet 5.3.1 and earlier that supports signing defaults to "CurrentUser" for the store location
 		if ($certIdType.ToLower() -eq "subject")
 		{
-			nuget sign $newestPackage -CertificateStoreLocation "LocalMachine" -CertificateSubjectName $certIdentifier -Timestamper $timeServer
+			nuget sign "$newestPackage" -CertificateStoreLocation "LocalMachine" -CertificateSubjectName $certIdentifier -Timestamper $timeServer
 		}
 		else
 		{
-			nuget sign $newestPackage -CertificateStoreLocation "LocalMachine" -CertificateFingerprint $certIdentifier -Timestamper $timeServer
+			nuget sign "$newestPackage" -CertificateStoreLocation "LocalMachine" -CertificateFingerprint $certIdentifier -Timestamper $timeServer
 		}
 		
 		try
 		{
-			nuget push $newestPackage -Source $nugetServer -ApiKey $apiKey
+			nuget push "$newestPackage" -Source $nugetServer -ApiKey $apiKey
 		}
 		catch 
 		{
 			Write-Host "!! Issue encountered pushing NuGet package $newestPackage to $nugetServer"
+			Write-Host "Issue: %_"
 		}
 
     }
