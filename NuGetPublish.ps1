@@ -3,7 +3,7 @@ param(
 	[string]$certIdentifier="",
 	[string]$certIdType="subject",
 	[string]$certStore="LocalMachine",
-	[string]$nugetServer="https://daikinapplied.pkgs.visualstudio.com/_packaging/IT/nuget/v3/index.json",
+	[string]$nugetServer="https://www.nuget.org/api/v2/package",
 	[string]$timeServer="http://timestamp.comodoca.com?td=sha256"
 )
 
@@ -15,7 +15,7 @@ Write-Host "DotNetLib NuGet Publish Tool                            "
 Write-Host "Developed by Daikin Applied                             "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 Write-Host "                                                        "
-Write-Host "? This tool digitally signs via subject (default) or fingerprint, and publishes to NuGet.org."
+Write-Host "? This tool publishes the NuGet packages.               "
 Write-Host
 
 # ~~~[Functions]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
