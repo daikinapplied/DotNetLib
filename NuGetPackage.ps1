@@ -20,7 +20,7 @@ Function BuildNuGet
 {
 	param (
 		[string]$project,
-		[string]$rootFolder,
+		[string]$rootFolder
 	)
 
 	Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
