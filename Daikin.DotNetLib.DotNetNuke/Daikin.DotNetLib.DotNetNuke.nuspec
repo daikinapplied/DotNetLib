@@ -15,9 +15,9 @@
     <copyright>$copyright$</copyright>
     <tags></tags>
     <dependencies>
-      <group targetFramework="net45"> <!-- Add a dependecy group for .NETFramework4.5 -->
+      <!--<group targetFramework="net45">
         <dependency id="DotNetNuke.Core" version="9.3.2.0" />
-      </group>
+      </group>-->
     </dependencies>
   </metadata>
   <files>

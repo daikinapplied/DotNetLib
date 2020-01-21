@@ -12,16 +12,19 @@ Write-Host
 
 # ~~~[Globals]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-$prodLocations = @("Release","prd")
+$prodLocations = @("prd","Release")
 
 # ~~~[Functions]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Function BuildNuGet
 {
-	param ([string]$project)
+	param (
+		[string]$project,
+		[string]$rootFolder,
+	)
 
 	Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	cd $project
+	Set-Location "$rootFolder\$project"
 	Write-Host "~~ Build: $project ~~"
 	Write-Host
 
@@ -35,7 +38,7 @@ Function BuildNuGet
 			$dllFile = Get-Item $searchFile
 			if ($dllFile)
 			{
-				Write-Host "Found: $dllFile.FullName"
+				Write-Host "Found: $($dllFile.FullName)"
 				$versionInfo = $dllFile.VersionInfo
 				break
 			}
@@ -56,12 +59,12 @@ Function BuildNuGet
 	
 		nuget pack $project.nuspec -Version $version -Prop Configuration=Release
 		Move-Item "$project.$version.nupkg" "bin\$prodBits\" -Force
-		cd ..
+		Set-Location "$rootFolder"
 		Write-Host
 	}
 	else
 	{
-		cd ..
+		Set-Location "$rootFolder"
 		Write-Host ":( Unable to find a package to deploy"
 		exit 1
 	}
@@ -70,9 +73,9 @@ Function BuildNuGet
 # ~~~[Main Body]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~ .NET Framework NuGet packaging (.NET Standard and .NET Core projects can build this automatically in Visual Studio 2017/2019) ~~
-BuildNuGet "Daikin.DotNetLib.DotNetNuke"
-BuildNuGet "Daikin.DotNetLib.Windows"
-BuildNuGet "Daikin.DotNetLib.Serial"
+BuildNuGet "Daikin.DotNetLib.DotNetNuke" $PSScriptRoot
+BuildNuGet "Daikin.DotNetLib.Windows" $PSScriptRoot
+BuildNuGet "Daikin.DotNetLib.Serial" $PSScriptRoot
 
 exit 0
 # ~End~
@@ -80,8 +83,8 @@ exit 0
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUUD3rifN9B63Bqw1Hn042arD6
-# geagghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUt8INcg8hoIwXwEL+IejDaWZ9
+# YMagghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -188,25 +191,25 @@ exit 0
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFNXIycLuVMJtOZ5/+1E8mkQg+u4BMA0GCSqGSIb3DQEBAQUABIIBAH4O
-# ldLtsAnoaJmPK7dm2ZgejAutR934s6RFZq0e3B53LDUHluo3TTlY+J8uxwseuj8B
-# RlqRyjvqS01BV9tKSsFsrzU5EORnDaoR6HRlF1DUN6wzMS2+HYDJllzH5XJAr9ZR
-# w4enxCy0GwlBGZtnXlrHh3WGlKGxvP4j/ZmkJl6MFj6h+3DzNRa6AbU58IQpBFMX
-# qmjo21ku1wbzMdh1Jel+Fp4dGzpVnZAA9r4Gj2Fh1SusB09CezmIt5jHr0k7tu9w
-# a2VFPhAUL3kDx9E75qYF8qZx5ydfmAz2N9VpujKhNqKRTpryFetqiSmn/9twR5yb
-# onTm4rMfOB5qpV9mLRahggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFETexRLpIJwL/vv3G3j4f07EJbeWMA0GCSqGSIb3DQEBAQUABIIBANNo
+# RbdpL6grnH4VBe0YkQMgizgzEmyD8Y3PHu0ZQ8Cj7UDljWzahj+8p7xY8sFktNm1
+# ZvzmDC2+ZyF+jhnlN6K4PTUEsLXdj/q5aGIHGV/GMRIOVOKKsMzurF8DR1lkVaLf
+# 1iO39WTKpkzpD1f6Eu5XL49mNIdIG1mTy7QSr6I9e3dM3/s48s8A/c8VXpBkR1OA
+# gpxWuZWnVh9fLzeI0AJL4374oU603S7xSF81ZxzKZyydHOd6FHIrq+Ns308r/5/G
+# gP+HW0nwhBYONyyskAOqTkwPnvuxrkokarESI5V+dqKohBHQ6SLWPbcxVDcOWbx8
+# oh1kO33Vt1EzL5wruPChggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTIxMTU1NzU3WjAjBgkqhkiG9w0BCQQxFgQUbwGU
-# RZhMNy7qnQi32EzA+x7/oF8wgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTIxMjI0NzEzWjAjBgkqhkiG9w0BCQQxFgQUnuTu
+# NfFijBeBrDsWYKxyVl5GlTwwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAFDxyINC6S+1iBenIOqNuHryQjXTBXfvBsau9w9w6J52k90WVygqPYgdvyUL
-# D4wurcHYKR5CAmaxsa0zQiqO8mwdIRCRsh6l2+uA1sLbwc8GhBOjtG/jWMQEwMxC
-# S/BbxyzptZAexEA9UXlDsGhiTZMCQw+wOMqf5rIB4lFmTBT31os6Np8Rz5ZqDwuy
-# LXtD5deMSvduSiaFs6o8sJ/odxZSFofH9bpoYb/wg8rbBmYWoz+Ssyr3SZo5LnP6
-# EPRl6Xq1wLnh8XR43ctU5Z/eBWrFnqUyqm7iToP4083EYsbFLqLXVLQl+P8BDLq9
-# qmPwhhu7N1m5gAMpPv3B8coip7U=
+# BIIBAA/45Ee+BYt/vlbZ1pxCvpZN11OqxhBWBDHS0JA8t4sKm7iufzp8YbHSgkzx
+# o6rlSPKJzZCWRRVjJCf+BG0rB/KHBUKiL30RAFN633I18kZiyKhvUAEP5getmafL
+# i/zgFm2l6ZK32GRYvM87+ZFCXrFXoGFmY0tg3a+cWKb29+WXLAKZIDe9ZppY1EHH
+# tbWsialam5D6H0EtxafZV9fBWPWmUFZ60j4M+0imvrIhUcvua9aLy7quqznsgVWt
+# ACgel1yK1Rv7V7GRsX+tNqgJvCVa+R+ljnC8SV1ZbXfwFW+mOw6XK0z+ctOIAwRy
+# jCMScsZJss4wLT+94enKZVvIagk=
 # SIG # End signature block
