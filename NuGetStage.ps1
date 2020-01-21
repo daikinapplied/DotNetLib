@@ -1,5 +1,7 @@
 param([string]$buildArtifactStagingDirectory)
 
+# ~~~[Introduce]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Write-Host "                                                        "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 Write-Host "DotNetLib Azure Pipelines Artifacts Staging Tool        "
@@ -9,8 +11,12 @@ Write-Host "                                                        "
 Write-Host "? Move NuGet Packages from Stage to Artifacts Locations."
 Write-Host "                                                        "
 
+# ~~~[Globals]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 $startupFolder = Get-Location
 $scriptFolder = $PSScriptRoot
+
+# ~~~[Main Body]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Write-Host "Script Startup Folder: $startupFolder"
 Write-Host "This Script Folder: $scriptFolder"
@@ -33,8 +39,8 @@ exit 0
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUSjZWQVtml1TxIrnKBDalZDdG
-# i46gghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUNuCzhW0qhe/Q5iHgfgenBD8a
+# g/OgghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -141,25 +147,25 @@ exit 0
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFNIlbw+9SrswUNkHWByyePGVU9X7MA0GCSqGSIb3DQEBAQUABIIBAE1N
-# ifmxkg1FV6se16TJBeczSbb3Po6Cy1ZbmBKjzilwv4YnnMANnisOCjpAX2YWoTip
-# x0opMX+4pOOGQ1/9T9AeWXfmcAdJ+Y1cKMhICeLHzc0J9doCq4Y8YN6gsZPf0vXy
-# xjA3dXDKMq+U7NI/Auhcgcjz7YPt/TlfjK69ERVRCM3Edm69xhKO+ewaIRNZT17P
-# 7VVV1Xoimk/M/YgbFmeEZa+6zDcQVnSshmTzFKHLvka6ksJRVQBDAGZfka6Ydwne
-# AJSfWWsoVP/sk0/gByLpwdMViAGGPyCepwrgQPyuqbLyzvbinIt5rTV/wLUGaaTH
-# dM7rvfyd31W9CEkcDdihggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFPK+i3VaOMEMNKdAuMxGs+EVD9X3MA0GCSqGSIb3DQEBAQUABIIBANNM
+# /TBeF1kSgzUR9FmKcRO8TTfbYOrTH83ukVhKKHrxJPRmNUnkasBRt+rA/YcTc3ne
+# vVStNdqtp4QawMq8t/EGfE1EGWJVx7FHwBdkgG+r4FqtaQpvYXVZ3K2SxEtZuGQi
+# 6GccopSbukZEG8PlIZO6njPsOI/I6hxvdLpB1vpXUQ8oQd+f+1fdBCylbVFc55Jp
+# mlopCE489l9x7WzFppaYuK2aWG+ZxLMRG/oQkIqN/p056TbLBQRVfEAQpouagBnK
+# +pMDw1hOecp2yZpBEaEXdjD5U3Qm5uYFBQYAehJp6dCa81g1QwCGt74/vmeqiY7T
+# gHDhY+HFCmP72W+FumShggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MjMxODI4WjAjBgkqhkiG9w0BCQQxFgQUkNen
-# SXSk6yvGwGDOalgNybxbeIYwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTIxMTU1ODA1WjAjBgkqhkiG9w0BCQQxFgQUY66o
+# +XRAOW8RSCg1xLV4Qx7XEJYwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAEb30tvRfnW930KK1UmlKSluzq6p0bqptuRIv7sclYBSrffMed1+WNwuXLX6
-# aDj4XAeM86cnCdnAhsoQt4vtgBaaRCO/gp1zzaLHq1DmrajyYR2LUr4TOBfXFqsG
-# 1LzeMoMyQq2CCt2S7HPUGcKiF82VBGPiJYSSxg7TY+2MmA6/ygHnxChaK+oZIr09
-# Ca1I4ZnA1xCpcFaBGCmHctVjTxJCW39mEQxmtLLpl7ewDAWq/UcCYMjSJ1mmZOYk
-# LLrGmLW7RTzPRjMZWuJ1JxEhr/ekSYfPyV8wvtXJb5b7Hz5Dc1mgp2PTz8bVKlMW
-# iH1Zqdg79bD6gHMauCosUfeQGKU=
+# BIIBAH28XmNYsoxsQ4melV/Y/KPPBt15T99K1/MySQEyUl3h0vHCksR2wFy3yYRZ
+# g/fJIIuTg0TKO7R912hlP3KhswDOXPODFAOwJyddEfs2i4ktGZ1HM2GwPrlGudlM
+# WNkiXezbhwbYcOA25QnOeC84xFcB4lSXEpt4hXJ7HmJkgMtTO1e2HHSNY9VRoOU0
+# hdarcTyH/xcCIMM7JW+IyeAfL0fF5GJSd/43+R0ibLwT8HVrjz9jastdGn3enJvp
+# 1ECa62h1J+hLIXH2GGO9gKs9ouD5/5d3UrCkjGYdQPzL47YuR3BaYfBchFj0/dM/
+# zfmcIEgqCrzddtal0ZZeF9RO7+U=
 # SIG # End signature block

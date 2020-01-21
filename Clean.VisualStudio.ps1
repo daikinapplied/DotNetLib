@@ -1,3 +1,5 @@
+# ~~~[Introduce]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Write-Host "                                                        "
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 Write-Host "Visual Studio Project Cleanup Tool                      "
@@ -9,6 +11,8 @@ Write-Host "and earlier Clean Solution option."
 Write-Host ""
 Write-Host "!! This presumes projects are in first-level subfolders."
 Write-Host ""
+
+# ~~~[Functions]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Function CleanupProject
 {
@@ -25,6 +29,8 @@ Function CleanupProject
 	}
 }
 
+# ~~~[Main Body]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 $dirs = Get-ChildItem | ?{ $_.PSIsContainer } | Select-Object FullName
 
 ForEach ($dir in $dirs) 
@@ -34,12 +40,14 @@ ForEach ($dir in $dirs)
 
 Write-Host ""
 Write-Host ":-) Cleanup Complete."
+exit 0
+# ~End~
 
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUVEdc1bvqfDOiQxaRXnqItGPC
-# H32gghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUu4hHiTSRhOzQWlYCM9hGAf5B
+# kdegghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -146,25 +154,25 @@ Write-Host ":-) Cleanup Complete."
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFIkErPRDW+xon/vyz2LI67o8FpEiMA0GCSqGSIb3DQEBAQUABIIBAEMC
-# J4Yk3Fho9+NleWWbU2PXBJhZUpkymdGYx6jnbAm9rbfuAleM0Dpx1ent9fUgAT4a
-# 70UUR/zNFT+BPKxVObOulsPJBwSgAgdHbUwYCW64PoHiztMqYe56T49/6xkGjhRq
-# YF0iQH4b2BiSrfj5hn7GXrx7JHL7Pn29UtbVqwy0B1mD5JLUnKiMym33Gs2rXONO
-# Xs4ln+oNroZVt0L3Z14fN5rqdfVRCJr/d0DslJk6TRpwtDoRweIgHKHB1Tg0VY38
-# XS60uULRKRiELNKxw/8izQyiAZVa69kHFASpllV9iwaPFXvhYTRgpJusShrJJKZn
-# RNJEEHCn/QnqyKbGb+6hggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFB4zuj7yetd7zaAUJy0cMbsVQDK3MA0GCSqGSIb3DQEBAQUABIIBADNR
+# ztjhmy7yo8GQTIjNDd9n+b/G0YBTS9elLf5dNKst928NF8/eTRs2iJjgzNX8d/LU
+# 89GCo7cdgJHQZEyIYN2K+jNw3mD6BOsY+GE19c/Vxss5A3ZZE6DJ7jCBDoi5DNMc
+# /ycsNIpimzd6SZXaVBGSzdiXVJ0EzoU14tjF3iPLJDqhqMt0uK+p3Zs0++DwWql+
+# Fhma71Cd0rn/Mv6GLIJ8WjEA6bcqwHAG7+a31wx65s89iI+5f1uy4cumugqqyhVQ
+# HDtDqzqAqleOEudCk4QW9cpeaw+ww/0fsDs9vK+3o3AZUg+tx7XsznFYvlNpuRrc
+# OdNW3xWzDybvWz6uOlGhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MTgyMTQ3WjAjBgkqhkiG9w0BCQQxFgQUje1q
-# WwIO0vPUv6N4ZlqaQJt6JwwwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTIxMTU1NTE0WjAjBgkqhkiG9w0BCQQxFgQU81Eh
+# fRVbt4GbSMJUP7s2TJP3758wgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAHska9OERFueZxcEnPLrPFleo2Ecf055ehuEglrDVDuvQB2M+dvkkscj9L1f
-# plEkEqMQ4Zd2vI3nK1G4o7ERPIi7k4Sl8OPYLOi2UPH0KNz55GYe/rpKimf1raph
-# InH48qK3I3ADXUpmhpfUbbeQXiP24eZLXQQYN7swLcoqlohzoQI3j9D6xB30euHT
-# hpUBah+Qq19IHgC45paxXvVRkRHuyVyV9Hz7j6TLV7Jq+UkZXQXjXM2Uomfnez+I
-# 2KvLMJKK/rbMVrTuQRzuko2T4jp/mS+1bHbLxV3iWWebdvtjw78emnbVQjl4R9fz
-# XUz5HbUg7dIpf3g2AuhXchPkDqw=
+# BIIBAH8TnYmkYBoMsVKX4HYlYEwzE2NNB/jfvnnVGSBFctOTSt5s+ELJZPEOG+94
+# w68XJ3a2BC86+EsZ5X526NwG/N9OZ13gY6UbV8KFJ1Hs2Y1iwSgFfY1PesLxLFrB
+# izYES78S08Iwvhdl3yhjEjSe93lhB7ekvCHlgInOX0ko9e8bbXNclx6Nybh6zQzn
+# zUMktbGwo1mY/QqiWgnFWre3x2m6O1eaRIuacAdgn3+HyvtexJMkcTmHF+/dz7q3
+# Zqml5CKauuzm3mimgiRjXKYlxmONaR0/ZAVKB9dYbR3D0pe5Ni2QT18tD+ICG4Yg
+# UdJ6cHHH+Y4tLqQY7Kz0SyrVaCk=
 # SIG # End signature block

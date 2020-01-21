@@ -1,7 +1,13 @@
 param(
 	[string]$apiKey="", 
 	[string]$certIdentifier="",
-	[string]$certIdType="subject")
+	[string]$certIdType="subject",
+	[string]$certStore="LocalMachine",
+	[string]$nugetServer="https://daikinapplied.pkgs.visualstudio.com/_packaging/IT/nuget/v3/index.json",
+	[string]$timeServer="http://timestamp.comodoca.com?td=sha256"
+)
+
+# ~~~[Introduce]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 Write-Host "DotNetLib NuGet All Tool                                "
@@ -11,18 +17,19 @@ Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 Write-Host "This tool calls Packaging and Publishing tools."
 Write-Host ""
 
+# ~~~[Main Body]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 & .\NuGetPackage.ps1
-& .\NuGetPublish $apiKey $certIdentifier $certIdType
+& .\NuGetPublish $apiKey $certIdentifier $certIdType $certStore $nugetServer $timeServer
 
 exit 0
-
 # ~End~
 
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQU0DjNruHKl3MJNn9zAyR0GwFc
-# giGgghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQU0n7ywqch26HvIJkE2miT9v+O
+# fRygghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -129,25 +136,25 @@ exit 0
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFOyK4ABg3HsLsDRriePJAYGbf76QMA0GCSqGSIb3DQEBAQUABIIBAHnk
-# o1kvOThNoyMsb65CUD6PjiU2/kDTavwCSG8g6KV91Rb5oxKm49K24yiPTW4HnPm1
-# 4Ze2po5BdqtLGJEpv7hixjKUMWrB4rABl6iFu8RjNJTqOk00mKuR4/u8Ys3F31g6
-# cXepxu/Pkt79BWCGKU6HH7ClqNniBQAqjt8kPxJPW4/nRYFbEuUJGUWXz3Hh5w3l
-# NV/wucl6KRqBgRM4K1IAjPPS5a8s6HBjvr8YM80l6QVXS9ixyLUuNyUl6+phIVC3
-# mUpG32KhU9yP21Cp/e3xHj0Y6e6mWPkE5UEj+paOMqnt68wNHKeUnwL6Pv6jzFRl
-# 7ZZjFO0v8UBn4mxZxcahggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFFAkHU5TUq9BFancd9Nku5t9j7scMA0GCSqGSIb3DQEBAQUABIIBAGFM
+# 0pDDU/d7t8lA+/CZJ4aEI4awkaqFo0SgODUYJ6q8j/9ZNIjpNbSDhCURWXQGVxri
+# PUTRCglIbGR3NVkFzBjB53WLVxx3JJP406rFlXv+UBJWA/okWd79008qb+FLtgin
+# PlbqYtxCDqjaKjYSTGwZeEsmy45be9ADSvXNAvj8nuHIMtOAI7aDCXsY7vOTDuu7
+# P9EMNQCQHefl+qhPzySvuOPGRDJw7ajGdKoJqOR6L39Qwh+ksQml4U2wu7vsGWXb
+# bO7yzjdw/QnHxCpajnfixbhYHi5gpKm7KZJbgDczkxVLFWYa3hADXmddZCEsOMZn
+# xbM29693ib/bjphT5l6hggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTE3MTgyMTU1WjAjBgkqhkiG9w0BCQQxFgQUmNQo
-# lpcSIkv4KaaGap3fkiODIbMwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTIxMTU1NzIxWjAjBgkqhkiG9w0BCQQxFgQUsGLp
+# 32FyOrjZqHZ6FPYukg7ILX4wgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAFs5TF7Ux6kq0GZbjV1jyYfDcKOpf5Bla0jgy7fpfq3vC7KOelUfqWDqo1ce
-# 419oA/JH3qRTdpBXOvNViqy7+eOrpBvpGoQA5yxGwuvEMONnv2xznS4gmJUIz3vh
-# BrsuHEZc/HSqctzTJafsZZKtbo9EeE2ZDmfxUplqSQ6hpMw6qBOYvm67fwYtZd82
-# UOoDuJB78b9bXEf0c0qX3CLIyc+hF8uQKcqFbLXD15qBmpLK+qc6J1UjM813h9sm
-# pxj31f6QZcJUQ/k0Qm0nU+JX04E5GPLSztH+cRPRsb0k8tqnsZuDAafN+fVPlkwE
-# jOeUDWlK0Wu/biIMEPMKUCP3g+o=
+# BIIBAJLBKUbQGOM8aHlQAILB+UqNyD1ZkwEJpwyQib+AUE9ILzFykVXbsEipv5d/
+# HiBMWw1IU+X7Vpagd4pyg85pED0AedCqUHdL89fFTxM8bXXMVK5hQ5H0qt6Azro7
+# H5sFfWq6tVPkmjlKSFypDfB/AqjVLxKbVOQWoBZQrpf5fRY4tBDsaCVCr9Xa5A44
+# hOt/tSfeVC7+rx2eDdsaHY4iZzioS72lfTIWAXtK2giTB5y3v2JmMpQqa3SVyaGy
+# 6GVRe8lNVmzZ31FljUKOWEVsw2CxTiXyl+JwAbGhyjppy4sMprkORnkvXSV9eVBw
+# iVAs+yNefuToMw4Vr8ASsI2k4VA=
 # SIG # End signature block

@@ -1,7 +1,10 @@
 param(
 	[string]$apiKey="", 
 	[string]$certIdentifier="",
-	[string]$certIdType="subject"
+	[string]$certIdType="subject",
+	[string]$certStore="LocalMachine",
+	[string]$nugetServer="https://daikinapplied.pkgs.visualstudio.com/_packaging/IT/nuget/v3/index.json",
+	[string]$timeServer="http://timestamp.comodoca.com?td=sha256"
 )
 
 # ~~~[Introduce]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -14,12 +17,6 @@ Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 Write-Host "                                                        "
 Write-Host "? This tool digitally signs via subject (default) or fingerprint, and publishes to NuGet.org."
 Write-Host
-
-# Digitally Signing Timestamp Server for NuGet Packages (nupkg)
-#http://timestamp.verisign.com/scripts/timstamp.dll # <-- Causes the error "ASN1 bad tag value met" when used with nupkg
-#http://timestamp.comodoca.com?td=sha256            # <-- works with nupkg
-$timeServer="http://timestamp.comodoca.com?td=sha256"
-$nugetServer="https://www.nuget.org/api/v2/package"
 
 # ~~~[Functions]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -55,11 +52,11 @@ Function PublishNuGet
 		# NuGet 5.3.1 and earlier that supports signing defaults to "CurrentUser" for the store location
 		if ($certIdType.ToLower() -eq "subject")
 		{
-			nuget sign "$newestPackage" -CertificateStoreLocation "LocalMachine" -CertificateSubjectName $certIdentifier -Timestamper $timeServer
+			nuget sign "$newestPackage" -CertificateStoreLocation $certStore -CertificateSubjectName $certIdentifier -Timestamper $timeServer
 		}
 		else
 		{
-			nuget sign "$newestPackage" -CertificateStoreLocation "LocalMachine" -CertificateFingerprint $certIdentifier -Timestamper $timeServer
+			nuget sign "$newestPackage" -CertificateStoreLocation $certStore -CertificateFingerprint $certIdentifier -Timestamper $timeServer
 		}
 		
 		try
@@ -133,8 +130,8 @@ exit 0
 # SIG # Begin signature block
 # MIIYcAYJKoZIhvcNAQcCoIIYYTCCGF0CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
-# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUnhUynEXgwRZE3H62eDQESHym
-# Hj2gghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQU++A9U7ERqLZQG3R26TGkQD4N
+# tB6gghMHMIIEFDCCAvygAwIBAgILBAAAAAABL07hUtcwDQYJKoZIhvcNAQEFBQAw
 # VzELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNV
 # BAsTB1Jvb3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw0xMTA0
 # MTMxMDAwMDBaFw0yODAxMjgxMjAwMDBaMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
@@ -241,25 +238,25 @@ exit 0
 # YXNzIDMgU0hBMjU2IENvZGUgU2lnbmluZyBDQQIQCwcG+m5b/nuagVPeiumLGzAJ
 # BgUrDgMCGgUAoHAwEAYKKwYBBAGCNwIBDDECMAAwGQYJKoZIhvcNAQkDMQwGCisG
 # AQQBgjcCAQQwHAYKKwYBBAGCNwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcN
-# AQkEMRYEFIYvj5Q1ZBweLm0Yy7xET5veuTSxMA0GCSqGSIb3DQEBAQUABIIBAGUY
-# Em22Vu8h4mXUWBR+sOGAzp6jI3BPENrW552eXOEshT9749Gg2SzgZ64HsRiQeaXM
-# 5gw6/S7puyQe8unB+W367SU+x8CwkTUxXL5j4s2YrUEoYZ4j1r3x9J+hVdR81yet
-# pJjd+ZC5MkZ8Jt0CZQKnCibhJd/kq8UnyWfGJ9/VjTGlOJ5GcGjyP8SWBHILwiaT
-# 9PN9v7+BiD6xzaO8/Ptj/go/0D6c9lQ/2AR9kyhr4D3WRXI/7d2sGpT1tQK/WOre
-# HT/U11hIq4P29SiY9H5760T+3yA5R7C6HPKDdHZ9QaVWEF0kLrESi7KKeDNdmQFr
-# b3JeSMVD7f8R3/LtD2mhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
+# AQkEMRYEFLqSbUlQSMNq3eMGzQ/7S4HrRRUkMA0GCSqGSIb3DQEBAQUABIIBADHE
+# Hobrut/jHlTwGjWi69M3gOVQtdpfRteoYTib18s+1wZJymCk5QQmWjDJ5cTQEY16
+# YxBxeTcpJzCBYQgLXnrgX7KNoNI3uSPueXkPbTmPIlIY1MGm5EqqQ9+F9l7/kjbz
+# J7lacwi/32H4U/tHOSI8Jh5YfqfH8ywQsaPAGWfZ43nDxf0gjcyLcgNbR1rgERTZ
+# TS9mGN8sboOmNPqIYcSTbUI/hU+6IoHXIYbkznZLw6V6dixqbvLRIhmxy3M7RRDh
+# xl31WYUBftoOD3CoHA1gQMe7/jvJwPkDtHSRvZ2dDZKqzVIa252XyoIgmbhjr18W
+# SFcz8r+W7xtUoqZi7zmhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEwaDBS
 # MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UE
 # AxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+
 # 6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
-# BgkqhkiG9w0BCQUxDxcNMjAwMTE4MDEzMDU2WjAjBgkqhkiG9w0BCQQxFgQUJEp+
-# A96bP0cPBHZlYkPfrh+n00QwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
+# BgkqhkiG9w0BCQUxDxcNMjAwMTIxMTU1NzQ2WjAjBgkqhkiG9w0BCQQxFgQUy8E2
+# PmKL5XHHU6Rf38u7bi84X+AwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGEBBRj
 # uC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcGA1UE
 # ChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1lc3Rh
 # bXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEBAQUA
-# BIIBAERaLIdg3y3OXezHL++v9mJujOR3lC2uIvgZHucF62MjmiPhRs9i1961vG1p
-# QZw1vv1KehgtIzgTxBsUkw6RnfKFXqCecjhxH9OOJ43GEIA2thiNn0Lh/UW3CwiV
-# JDBXCdyk6aHoeDu26xig7uG1PBiqhOCWoAnXtjTsqQuoo3Av2hdckMwX2kutJLBF
-# 2OlJ3u3b0eDMAqVaEzvN/tu2AeEzwh5r337sCHkCoLRBvpRg1KUbm3O7ZIJSmGFs
-# 7+Jg4STF4gR5lVCyT+56ZHlpGlGoduR5dt4+A0EZzWu7TXQekJCqXtTm6X/yNIuI
-# Thw7+Vs7YwrlR0bI0vQFxstRFPw=
+# BIIBAKnHUXVAzUd+2amVcc1wAh6YhzWXDyeipL6Cw+nIucsRR+JPbVVp+RGnwLHs
+# ZcREkBwqJhKF+xFZXjXeBk+4NiyIxTbvNwRs+ZMFxe5JdZLJbqg2cFrAckkSxlE+
+# vmIH0rd/5pt6p7MxNnNh36Dw2K0BtIeEUvSqjk6qFXj6VX08ubFyRr1RoyCYYaRu
+# jlnZlIPre14sU2WXEIEI+/YnPbCV8f3v0Vgj2p6hn4HwLjUT8x7+w/096wOGFJ9x
+# U2qCGStTr93zZsYeGlAiAhP6VC5zUVY7aaqgLHjzj82eiEqYrzQLBPMCirMCu1qY
+# EjNU2TX4K1MLJNUQDkHqvo/h7nU=
 # SIG # End signature block
