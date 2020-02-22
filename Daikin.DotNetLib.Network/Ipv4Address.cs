@@ -74,9 +74,14 @@ namespace Daikin.DotNetLib.Network
         #endregion
 
         #region Constructors
-        public Ipv4Address(string ipAddress = "", string subnetMask = "")
+        public Ipv4Address() // Create empty constructor for Razor (e.g., ASP.NET Core 3.1)
         {
-            if (ipAddress.Length > 0) _ipAddress.Value = ipAddress;
+
+        }
+
+        public Ipv4Address(string ipAddress, string subnetMask = "")
+        {
+            _ipAddress.Value = ipAddress;
             if (subnetMask.Length > 0) _subnetMask.Value = subnetMask;
         }
         #endregion
