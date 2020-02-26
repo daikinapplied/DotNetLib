@@ -62,7 +62,9 @@ namespace Daikin.DotNetLib.Network
                         httpRequestMessage.Content = new StringContent(Json.ObjectToString(data), Encoding.UTF8, "application/json");
                     }
                     var response = httpClient.SendAsync(httpRequestMessage).Result;
+                    #if DEBUG
                     DebugOutput(response, serverUrl, useProxy, proxyServer, proxyPort);
+                    #endif
                     return (!response.IsSuccessStatusCode 
                                 ? default 
                                 : Json.ObjectFromString<TOutput>(response.Content.ReadAsStringAsync().Result),
@@ -223,7 +225,6 @@ namespace Daikin.DotNetLib.Network
             return Call(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds);
         }
 
-
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // No Object Input, string Output
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -279,6 +280,60 @@ namespace Daikin.DotNetLib.Network
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
             if (method == null) method = HttpMethod.Get;
             return Call(serverFullUrl, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds);
+        }
+        
+        /// <summary>
+        /// Used for only receiving an output (no input) from a WebApi via GET with Basic Auth - useful for debugging return calls to determine json structure
+        /// </summary>
+        /// <param name="serverUrl">Server URL without path</param>
+        /// <param name="serverPath">Server Path (method path/call)</param>
+        /// <param name="method">WebApi method type GET, POST, PUT (GET is default)</param>
+        /// <param name="username">Basic Auth Username</param>
+        /// <param name="password">Basic Auth Password</param>
+        /// <param name="useProxy">Whether to use a proxy (Optional)</param>
+        /// <param name="proxyServer">Proxy server URL (Optional)</param>
+        /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
+        /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <returns>return string (Json) from WebApi call</returns>
+        public static string Call(string serverUrl, string serverPath, string username, string password, HttpMethod method = null, bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        {
+            var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
+            return Call(serverFullUrl, username, password, useProxy, proxyServer, proxyPort, httpTimeoutSeconds);
+        }
+
+        /// <summary>
+        /// Used for only receiving an output (no input) from a WebApi via GET with Basic Auth - useful for debugging return calls to determine json structure
+        /// </summary>
+        /// <param name="serverUrl">Server URL with full path</param>
+        /// <param name="username">Basic Auth Username</param>
+        /// <param name="password">Basic Auth Password</param>
+        /// <param name="useProxy">Whether to use a proxy (Optional)</param>
+        /// <param name="proxyServer">Proxy server URL (Optional)</param>
+        /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
+        /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <returns>return string (Json) from WebApi call</returns>
+        public static string Call(string serverUrl, string username, string password, bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        {
+            try
+            {
+                using (var httpClient = HttpConnection.Client(serverUrl, useProxy: useProxy, proxyServer: proxyServer, proxyPort: proxyPort, httpTimeoutSeconds: httpTimeoutSeconds))
+                {
+                    var credentialsEncoding = Encoding.ASCII.GetBytes($"{username}:{password}");
+                    httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentialsEncoding));
+                    var response = httpClient.GetAsync(serverUrl).Result;
+                    #if DEBUG
+                    DebugOutput(response, serverUrl, useProxy, proxyServer, proxyPort);
+                    #endif
+                    if (!response.IsSuccessStatusCode) return JsonError.Build(Convert.ToInt32(response.StatusCode), response.ReasonPhrase);
+                    var content = response.Content;
+                    var data = content.ReadAsStringAsync().Result;
+                    return data;
+                }
+            }
+            catch (Exception ex)
+            {
+                return JsonError.Build(ex.HResult, NewlineCleanse(ex.Message));
+            }
         }
 
         private static string NewlineCleanse(string s)
