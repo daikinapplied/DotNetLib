@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Daikin.DotNetLib.Network</RootNamespace>
     <ApplicationIcon>Images\network.ico</ApplicationIcon>
-    <Version>1.5.2</Version>
+    <Version>1.5.3</Version>
     <Authors>Web Development Team and Contributors</Authors>
     <Company>Daikin Applied Americas Inc</Company>
     <Product>Daikin.DotNetLib</Product>
@@ -23,6 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 

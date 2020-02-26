@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 namespace Daikin.DotNetLib.Network
 {
@@ -50,6 +51,24 @@ namespace Daikin.DotNetLib.Network
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             }
             return httpClient;
+        }
+
+        /// <summary>
+        /// Determine if caller matches an IP address mask (regular expression)
+        /// </summary>
+        /// <param name="httpContextAccessor">HttpContext.Current with .NET Framework, HttpContext with .NET Core</param>
+        /// <param name="ipFilterRegEx">Regular Expression (typically stored in web.config or appsettings.json, such as 127.0.1|::1 for localhost</param>
+        /// <param name="requireSecured">Check if the connection should be secured (generally recommended)</param>
+        /// <returns></returns>
+        public static (bool, string) AllowedCaller(Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor, string ipFilterRegEx, bool requireSecured = true)
+        {
+            var ipAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (string.IsNullOrEmpty(ipAddress)) return (false, "Unable to determine caller IP Address");
+            var isSecure = httpContextAccessor.HttpContext.Request.IsHttps;
+            if (requireSecured && !isSecure) return (false, "Caller made insecure request");
+            return !Regex.IsMatch(ipAddress, ipFilterRegEx) 
+                ? (false, $"Invalid caller from {ipAddress}") 
+                : (true, "Success");
         }
         #endregion
     }
