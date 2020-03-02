@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon>Images\data.ico</ApplicationIcon>
-    <Version>1.3.5</Version>
+    <Version>1.3.6</Version>
     <Authors>Web Development Team and Contributors</Authors>
     <Company>Daikin Applied Americas Inc</Company>
     <Product>Daikin.DotNetLib</Product>
