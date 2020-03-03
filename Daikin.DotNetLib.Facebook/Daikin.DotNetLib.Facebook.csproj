@@ -9,7 +9,7 @@
     <Product>Daikin.DotNetLib</Product>
     <Description>Library for interacting with Facebook via .NET</Description>
     <Copyright>Copyright © 2018-2020</Copyright>
-    <Version>1.4.10</Version>
+    <Version>1.4.11</Version>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/DaikinApplied/DotNetLib</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
