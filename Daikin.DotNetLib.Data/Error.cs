@@ -9,9 +9,16 @@ namespace Daikin.DotNetLib.Data
         Informational
     }
 
+    public enum TrackingType
+    {
+        DateTime,
+        Counter,
+        Guid
+    }
+
     public static class Error
     {
-        public static string BuildString(string code, string message, ErrorType errorType = ErrorType.Error, int? errorNumber = null, DateTime? when = null)
+        public static string BuildString(string code, string message, ErrorType errorType = ErrorType.Error, TrackingType trackingType = TrackingType.DateTime, object data = null)
         {
             string errorTypeMsg;
             switch (errorType)
@@ -29,13 +36,29 @@ namespace Daikin.DotNetLib.Data
                     throw new ArgumentOutOfRangeException(nameof(errorType), errorType, null);
             }
 
-            var errorId = (errorNumber == null ? BuildDate(when ?? DateTime.Now) : "#" + errorNumber);
+            string errorId;
+            switch (trackingType)
+            {
+                case TrackingType.DateTime:
+                    errorId = BuildDateId(data == null ? DateTime.Now : Convert.ToDateTime(data));
+                    break;
+                case TrackingType.Counter:
+                    if (data == null) throw new Exception("Counter usage desired but not specified");
+                    errorId = "#" + Convert.ToInt64(data);
+                    break;
+                case TrackingType.Guid:
+                    errorId = "G" + (data == null ? new Guid().ToString() : Convert.ToString(data));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(trackingType), trackingType, null);
+            }
             return $"{errorTypeMsg}: {message} ({code} {errorId})";
         }
 
-        public static string BuildDate(DateTime when)
+        public static string BuildDateId(DateTime when)
         {
-            return $"{when.Year.ToString().Substring(2)}{PadNumber(when.Month)}{PadNumber(when.Day)}{PadNumber(when.Hour)}{PadNumber(when.Minute)}";
+            // Convert hex code based on the current date and time
+            return Convert.ToString(Convert.ToInt64($"{when.Year.ToString().Substring(2)}{PadNumber(when.Month)}{PadNumber(when.Day)}{PadNumber(when.Hour)}{PadNumber(when.Minute)}{PadNumber(when.Second)}"), 16);
         }
 
         private static string PadNumber(int number)
