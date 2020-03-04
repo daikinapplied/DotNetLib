@@ -40,6 +40,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Daikin.DotNetLib.Data\Daikin.DotNetLib.Data.csproj" />
     <ProjectReference Include="..\Daikin.DotNetLib.Facebook\Daikin.DotNetLib.Facebook.csproj" />
+    <ProjectReference Include="..\Daikin.DotNetLib.MsTeams\Daikin.DotNetLib.MsTeams.csproj" />
     <ProjectReference Include="..\Daikin.DotNetLib.Network\Daikin.DotNetLib.Network.csproj" />
   </ItemGroup>
 

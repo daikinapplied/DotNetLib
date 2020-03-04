@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daikin.DotNetLib.Network", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daikin.DotNetLib.Serial", "Daikin.DotNetLib.Serial\Daikin.DotNetLib.Serial.csproj", "{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daikin.DotNetLib.MsTeams", "Daikin.DotNetLib.MsTeams\Daikin.DotNetLib.MsTeams.csproj", "{2531F51B-CEBD-4DB4-9C97-82AA4B923E24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBEA3D9A-74E8-4CAD-A53E-59D3029520E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2531F51B-CEBD-4DB4-9C97-82AA4B923E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2531F51B-CEBD-4DB4-9C97-82AA4B923E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2531F51B-CEBD-4DB4-9C97-82AA4B923E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2531F51B-CEBD-4DB4-9C97-82AA4B923E24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

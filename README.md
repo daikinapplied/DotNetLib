@@ -11,6 +11,7 @@ The following specific projects are available, used to create corresponding NuGe
 |<img src="Daikin.DotNetLib.Network/Images/network.png" width="64"/>         | [Daikin.DotNetLib.Network](Daikin.DotNetLib.Network/README.md) are helpers for making Web Api calls (typically JSON-based), SMTP, Networking, etc. calls                         |
 |<img src="Daikin.DotNetLib.Windows/Images/windows.png" width="64"/>         | [Daikin.DotNetLib.Windows](Daikin.DotNetLib.Windows/README.md) are helpers for Windows-based applications                                                                        |
 |<img src="Daikin.DotNetLib.Serial/Images/serial.png" width="64"/>           | [Daikin.DotNetLib.Serial](Daikin.DotNetLib.Serial/README.md) are Windows-based USB and Serial port helpers for Windows-based applications                                        |
+|<img src="Daikin.DotNetLib.MsTeams/Images/teams.png" width="64"/>           | [Daikin.DotNetLib.MsTeams](Daikin.DotNetLib.MsTeams/README.md) are helpers Microsoft Teams integration                                                                           |
 |<img src="Daikin.DotNetLib.Core.Tests/Images/debugging.png" width="64"/>    | [Daikin.DotNetLib.Core.Tests](Daikin.DotNetLib.Core.Tests/README.md) are .NET Core xUnit Unit Tests, serves as coding samples                                                    |
 
 # Introduction

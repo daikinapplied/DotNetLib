@@ -10,6 +10,7 @@ namespace Daikin.DotNetLib.Core.Tests
         public string FacebookAccessToken { get; set; }
         public string FacebookAppSecret { get; set; }
         public string FacebookPageOrId { get; set; }
+        public string TeamsWebHookUrl { get; set; }
         #endregion
 
         #region Functions

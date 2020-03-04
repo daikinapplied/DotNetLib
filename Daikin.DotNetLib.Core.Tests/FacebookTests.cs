@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using Daikin.DotNetLib.Facebook;
 using Daikin.DotNetLib.Facebook.Models;
 using Xunit;
@@ -211,7 +209,7 @@ namespace Daikin.DotNetLib.Core.Tests
         {
             var pageFeed = new Feed
             {
-                Data = new List<Facebook.Models.DataFeed>
+                Data = new List<DataFeed>
                 {
                     new DataFeed { Created = currentTime, Id = "123", Message = "This is a message"},
                     new DataFeed { Created = DateTime.Now, Id = "456", Message = "This is another message"}
