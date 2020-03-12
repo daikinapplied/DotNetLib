@@ -7,9 +7,8 @@ namespace Daikin.DotNetLib.Core.Tests
     public class Error
     {
         #region Constants
-        const string Code = "Ref A17";
-        const string Message = "Unable to access the whatchamacallit";
-
+        private const string Code = "Ref A17";
+        private const string Message = "Unable to access the whatchamacallit";
         #endregion
 
         #region Methods
@@ -34,6 +33,48 @@ namespace Daikin.DotNetLib.Core.Tests
             var guid = new Guid();
             var errorMessage = Data.Error.BuildString(Code, Message, trackingType: TrackingType.Guid, data: guid.ToString());
             Assert.Equal($"Error Encountered: {Message} ({Code} G{guid.ToString()})", errorMessage);
+        }
+
+        [Fact]
+        public void EmptyCode()
+        {
+            var errorMessage = Data.Error.BuildString("", "This is a message");
+            Assert.NotEmpty(errorMessage);
+        }
+
+        [Fact]
+        public void NullCode()
+        {
+            var errorMessage = Data.Error.BuildString(null, "This is a message");
+            Assert.NotEmpty(errorMessage);
+        }
+
+        [Fact]
+        public void EmptyMessage()
+        {
+            var errorMessage = Data.Error.BuildString("MyCode", "");
+            Assert.NotEmpty(errorMessage);
+        }
+
+        [Fact]
+        public void NullMessage()
+        {
+            var errorMessage = Data.Error.BuildString("MyCode", null);
+            Assert.NotEmpty(errorMessage);
+        }
+
+        [Fact]
+        public void EmptyCodeAndMessage()
+        {
+            var errorMessage = Data.Error.BuildString(string.Empty, string.Empty);
+            Assert.NotEmpty(errorMessage);
+        }
+
+        [Fact]
+        public void NullCodeAndMessage()
+        {
+            var errorMessage = Data.Error.BuildString(null, null);
+            Assert.NotEmpty(errorMessage);
         }
         #endregion
 
