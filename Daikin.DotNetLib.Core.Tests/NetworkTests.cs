@@ -1,6 +1,5 @@
-﻿using System.Net;
-using System.Net.Http;
-using Daikin.DotNetLib.Core.Tests.Models.JsonPlaceHolder;
+﻿using System.Net.Http;
+using Daikin.DotNetLib.Core.Tests.Models;
 using Daikin.DotNetLib.Network;
 using Xunit;
 
@@ -8,6 +7,25 @@ namespace Daikin.DotNetLib.Core.Tests
 {
     public class NetworkTests
     {
+        #region Fields
+        private readonly Config _configuration;
+        #endregion
+
+        #region Constructors
+        public NetworkTests()
+        {
+            _configuration = Config.GetConfiguration();
+        }
+        #endregion
+
+        #region Methods
+        public Models.FakeJsonRequest BuildFakeRequest()
+        {
+            var request = new Models.FakeJsonRequest();
+            request.Token = _configuration.FakeJsonToken;
+            return request;
+        }
+
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Simple Checks
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -26,34 +44,23 @@ namespace Daikin.DotNetLib.Core.Tests
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         [Fact]
-        public void ApiGetDataReturned()
-        {
-            var (posts, response) = WebApi.Call<Posts>("https://jsonplaceholder.typicode.com/posts", HttpMethod.Get);
-            Assert.True(response.IsSuccessStatusCode);
-            Assert.True(posts.Count > 0);
-            Assert.Equal("sunt aut facere repellat provident occaecati excepturi optio reprehenderit", posts[0].Title);
-        }
-
-        [Fact]
-        public void ApiPutDataReturned()
-        {
-            // The WebApi doesn't have a Put method to return data
-            var (comments, response) = WebApi.Call<Comments>("https://jsonplaceholder.typicode.com/posts/1/comments", HttpMethod.Put);
-            Assert.False(response.IsSuccessStatusCode);
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-            Assert.Equal("Not Found", response.ReasonPhrase);
-            Assert.Null(comments);
-        }
-
-        [Fact]
         public void ApiPostData()
         {
-            var postRequest = new Post {UserId = 1, Title = "SSO Testing", Body = "Checking out the pushing of data"};
-
-            var (postResponse, httpResponse) = WebApi.Call<Post, Post>("https://jsonplaceholder.typicode.com/posts", postRequest, HttpMethod.Post);
+            var request = BuildFakeRequest();
+            var (postResponse, httpResponse) = WebApi.Call<FakeJsonRequest, FakeJsonResponse>(_configuration.FakeJsonUrl, request, HttpMethod.Post);
             Assert.True(httpResponse.IsSuccessStatusCode);
             Assert.NotNull(postResponse);
-            Assert.Equal("SSO Testing", postResponse.Title);
+            Assert.NotNull(postResponse.Data.LastLogin.Ip4);
+        }
+
+        [Fact]
+        public void ApiPutData()
+        {
+            var request = BuildFakeRequest();
+            var (postResponse, httpResponse) = WebApi.Call<FakeJsonRequest, FakeJsonResponse>(_configuration.FakeJsonUrl, request, HttpMethod.Put);
+            Assert.True(httpResponse.IsSuccessStatusCode);
+            Assert.NotNull(postResponse);
+            Assert.NotNull(postResponse.Data.LastLogin.DateTime);
         }
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -199,5 +206,7 @@ namespace Daikin.DotNetLib.Core.Tests
             address.Networks = 0;
             Assert.Equal("128.0.0.0", address.SubnetMask);
         }
+        #endregion
+
     }
 }

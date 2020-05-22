@@ -11,7 +11,7 @@ namespace Daikin.DotNetLib.Network
         #endregion
 
         #region Fields
-        private readonly Ipv4Segment[] _ipv4Segments;
+        private Ipv4Segment[] _ipv4Segments;
         #endregion
 
         #region Properties
@@ -42,9 +42,17 @@ namespace Daikin.DotNetLib.Network
         #region Constructors
         public Ipv4HostMask() // Create empty constructor for Razor (e.g., ASP.NET Core 3.1)
         {
+            Init();
         }
 
         public Ipv4HostMask(bool maxValue = false)
+        {
+            Init(maxValue);
+        }
+        #endregion
+
+        #region Methods
+        private void Init(bool maxValue = false)
         {
             _ipv4Segments = new Ipv4Segment[MaxSegments];
             for (var index = 0; index < MaxSegments; index++)
@@ -53,9 +61,7 @@ namespace Daikin.DotNetLib.Network
             }
             AssignFill((byte)(maxValue ? 255 : 0));
         }
-        #endregion
 
-        #region Methods
         private void AssignFill(byte value)
         {
             for (var index = 0; index < MaxSegments; index++)
