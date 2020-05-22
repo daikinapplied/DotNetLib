@@ -76,7 +76,6 @@ namespace Daikin.DotNetLib.Network
         #region Constructors
         public Ipv4Address() // Create empty constructor for Razor (e.g., ASP.NET Core 3.1)
         {
-
         }
 
         public Ipv4Address(string ipAddress, string subnetMask = "")

@@ -40,6 +40,10 @@ namespace Daikin.DotNetLib.Network
         #endregion
 
         #region Constructors
+        public Ipv4HostMask() // Create empty constructor for Razor (e.g., ASP.NET Core 3.1)
+        {
+        }
+
         public Ipv4HostMask(bool maxValue = false)
         {
             _ipv4Segments = new Ipv4Segment[MaxSegments];
