@@ -13,9 +13,9 @@ variables:
   BuildNuGet: 5.3.1
   BuildConfiguration: 'release'
   BuildPlatform: 'any cpu'
-  Parameters.Solution: '**\*.sln'
-  Parameters.ArtifactName: 'drop'
-  System.Debug: false
+  BuildSolutions: '**\*.sln'
+  BuildArtifactName: 'drop'
+  BuildDebug: false
 
 trigger:
   batch: true
@@ -24,22 +24,6 @@ trigger:
     - master
   
 steps:
-#- script: |
-#   set
-#   
-#  displayName: 'Display environmental variables (cmd)'
-
-#- powershell: |
-#   get-childitem -path env:*
-#   
-#  displayName: 'Disable environmental variables (PS1)'
-
-#- task: AzureKeyVault@1
-#  displayName: 'Azure Key Vault: smit-enterprise-kv'
-#  inputs:
-#    azureSubscription: 'smit-enterprise-devtest-azure-pipeline-arm'
-#    KeyVaultName: 'smit-enterprise-kv'
-
 - task: NuGetToolInstaller@0
   displayName: '[Use NuGet $(BuildNuGet)]'
   inputs:
@@ -48,13 +32,13 @@ steps:
 - task: NuGetCommand@2
   displayName: '[Restore NuGet Packages]'
   inputs:
-    restoreSolution: '$(Parameters.Solution)'
+    restoreSolution: '$(BuildSolutions)'
 
 - task: VSBuild@1
-  displayName: '[Build Solution]'
+  displayName: '[Build Solution to Artifacts]'
   inputs:
-    solution: '$(Parameters.Solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+    solution: '$(BuildSolutions)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(Build.ArtifactStagingDirectory)\\"'
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
@@ -77,19 +61,12 @@ steps:
     filePath: '.\NuGetStage.ps1'
     arguments: '$(Build.ArtifactStagingDirectory)'
 
-#- task: PowerShell@2
-#  displayName: 'PowerShell Script'
-#  inputs:
-#    targetType: filePath
-#    filePath: '.\NuGetAll.ps1'
-#    arguments: '$(daikinapplied-dotnetlib-nuget-apikey) $(daa-code-signing-subject) "subject"'
-
 # publishLocation: container, filePath
 - task: PublishBuildArtifacts@1
   displayName: '[Publish Artifacts to Releases]'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: '$(Parameters.ArtifactName)'
+    ArtifactName: '$(BuildArtifactName)'
     publishLocation: 'Container' 
   condition: succeededOrFailed()
   
