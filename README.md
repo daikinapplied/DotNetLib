@@ -16,13 +16,13 @@ The following specific projects are available, used to create corresponding NuGe
 
 # Introduction
 <img src="Images/DotNetLib.png" width="96" align="right" alt="DotNetLib Logo"/>
-These .NET Standard, Core, and Framework libraries are a collection of work intented to share (give back), collaborate, and learn.
+These .NET Standard, Core, and Framework libraries are a collection of work intended to share (give back), collaborate, and learn.
 
 # Getting Started
 This presumes a strong understanding of the following tools and technologies, and that they are installed.
 
 - One of the following Visual Studio releases (Community, Professional, or Enterprise), fully patched:
-	- Visual Studio 2019
+	- Visual Studio 2019 (Recommended)
 	- Visual Studio 2017
 - .NET Standard 2.0 libraries (used whenever possible)
 - .NET Framework 4.5.2 (maximizing backward compatibility with .NET Framework projects and still supported by Microsoft)
