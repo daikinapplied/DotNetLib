@@ -1,10 +1,11 @@
 # DotNetLib Projects
 The following specific projects are available, used to create corresponding NuGet packages for NuGet.org.  Read their associated readme file for specific details.
 
-| Library                                                                           | NuGet Package (and specific README)                                                                                                                                                            |
-|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|<img src="Daikin.DotNetLib.Application/Images/application.png" width="64"/> | [Daikin.DotNetLib.Application](Daikin.DotNetLib.Application/README.md) are basic functions to generically assist with applications                                               |
-|<img src="Daikin.DotNetLib.Data/Images/data.png" width="64"/>               | [Daikin.DotNetLib.Data](Daikin.DotNetLib.Data/README.md) are basic classes to assist with specific data types                                                                    |
+| Library                                                                    | NuGet Package (and specific README)                                                                                                                                              |
+|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|<img src="Daikin.DotNetLib.Serilog/Images/serilog.png" width="64"/>         | [Daikin.DotNetLib.Serilog](Daikin.DotNetLib.Serilog/README.md) are contains helper functions to assist with Serilog logging usage, especially with Microsoft and Azure SQL Server|
+|<img src="Daikin.DotNetLib.Application/Images/application.png" width="64"/> | [Daikin.DotNetLib.Application](Daikin.DotNetLib.Application/README.md) has basic functions to generically assist with applications                                               |
+|<img src="Daikin.DotNetLib.Data/Images/data.png" width="64"/>               | [Daikin.DotNetLib.Data](Daikin.DotNetLib.Data/README.md) contains basic classes to assist with specific data types                                                               |
 |<img src="Daikin.DotNetLib.DotNetNuke/Images/dotnetnuke.png" width="64"/>   | [Daikin.DotNetLib.DotNetNuke](Daikin.DotNetLib.DotNetNuke/README.md) supports Module Development on DNN (formerly DotNetNuke), the C# open source Content Management System (CMS)|
 |<img src="Daikin.DotNetLib.Facebook/Images/facebook.png" width="64"/>       | [Daikin.DotNetLib.Facebook](Daikin.DotNetLib.Facebook/README.md) supports Facebook API calls to pull content for a single source of information                                  |
 |<img src="Daikin.DotNetLib.Security/Images/security.png" width="64"/>       | [Daikin.DotNetLib.Security](Daikin.DotNetLib.Security/README.md) provides security helper to make it easier to encrypt and decrypt data                                          |
@@ -22,12 +23,11 @@ These .NET Standard, Core, and Framework libraries are a collection of work inte
 This presumes a strong understanding of the following tools and technologies, and that they are installed.
 
 - One of the following Visual Studio releases (Community, Professional, or Enterprise), fully patched:
-	- Visual Studio 2019 (Recommended)
-	- Visual Studio 2017
+	- Visual Studio 2019
 - .NET Standard 2.0 libraries (used whenever possible)
 - .NET Framework 4.5.2 (maximizing backward compatibility with .NET Framework projects and still supported by Microsoft)
 - .NET Framework 4.7.2 (for DotNetNuke project to support DNN library requirements)
-- .NET Core 2.2 SDK (for xUnit Testing)
+- .NET 5 SDK (for xUnit Testing)
 - C# development
 - Web API (for specific projects)
 - Graph API (for specific projects)

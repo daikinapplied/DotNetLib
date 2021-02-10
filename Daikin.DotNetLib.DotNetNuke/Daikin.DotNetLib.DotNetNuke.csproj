@@ -35,17 +35,17 @@
     <ApplicationIcon>Images\dotnetnuke.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke, Version=9.4.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Core.9.4.4\lib\net45\DotNetNuke.dll</HintPath>
+    <Reference Include="DotNetNuke, Version=9.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.9.8.0\lib\net45\DotNetNuke.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetNuke.Abstractions, Version=9.4.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Abstractions.9.4.4\lib\netstandard2.0\DotNetNuke.Abstractions.dll</HintPath>
+    <Reference Include="DotNetNuke.Abstractions, Version=9.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Abstractions.9.8.0\lib\netstandard2.0\DotNetNuke.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetNuke.DependencyInjection, Version=9.4.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.DependencyInjection.9.4.4\lib\netstandard2.0\DotNetNuke.DependencyInjection.dll</HintPath>
+    <Reference Include="DotNetNuke.DependencyInjection, Version=9.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.DependencyInjection.9.8.0\lib\netstandard2.0\DotNetNuke.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetNuke.Core.9.4.4\lib\net45\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <HintPath>..\packages\DotNetNuke.Core.9.8.0\lib\net45\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>

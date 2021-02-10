@@ -18,7 +18,7 @@ variables:
   BuildDebug: false
 
 trigger:
-  batch: true
+  batch: 'true'
   branches:
     include:
     - master
