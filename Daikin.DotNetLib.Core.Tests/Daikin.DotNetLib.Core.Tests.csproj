@@ -1,13 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Daikin.DotNetLib.Core.Tests</RootNamespace>
     <UserSecretsId>7c94ff42-b17b-4a22-89ff-38d531f03402</UserSecretsId>
 
     <IsPackable>false</IsPackable>
-
-    <ApplicationIcon>Images\debugging.ico</ApplicationIcon>
 
     <Authors>Web Development Team and Contributors</Authors>
 
@@ -15,26 +12,35 @@
 
     <Product>Daikin.DotNetLib</Product>
 
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-
-    <Copyright>Copyright © 2016-2020</Copyright>
-
     <Description>Unit Tests for .NET Standard Libraries</Description>
+
+    <Copyright>Copyright © 2016-2021</Copyright>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
     <PackageProjectUrl>https://github.com/DaikinApplied/DotNetLib</PackageProjectUrl>
 
     <RepositoryType>Git</RepositoryType>
 
+    <PackageIcon>debugging.png</PackageIcon>
+
     <RepositoryUrl>https://github.com/DaikinApplied/DotNetLib</RepositoryUrl>
+
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Images\debugging.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -43,9 +49,5 @@
     <ProjectReference Include="..\Daikin.DotNetLib.MsTeams\Daikin.DotNetLib.MsTeams.csproj" />
     <ProjectReference Include="..\Daikin.DotNetLib.Network\Daikin.DotNetLib.Network.csproj" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="codesign.bat &quot;$(TargetPath)&quot;" />
-  </Target>
 
 </Project>

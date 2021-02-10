@@ -21,6 +21,14 @@ namespace Daikin.DotNetLib.Core.Tests
 
         #region Methods
         [Fact]
+        public void TestConfiguration()
+        {
+            Assert.NotEmpty(_configuration.FacebookPageOrId);
+            Assert.NotEmpty(_configuration.FacebookAppSecret);
+            Assert.NotEmpty(_configuration.FacebookAccessToken);
+        }
+
+        [Fact]
         public void TestInstanceCursors()
         {
             var cursors = new Cursors();
@@ -105,15 +113,6 @@ namespace Daikin.DotNetLib.Core.Tests
                 }
             }
             Assert.NotEmpty(allImages);
-        }
-
-        [Fact]
-        public void TestTagged()
-        {
-            var pagePosts = Read.Feed(_configuration.FacebookPageOrId, _configuration.FacebookAccessToken, _configuration.FacebookAppSecret, Feed.EdgeType.Tagged);
-            Assert.NotNull(pagePosts);
-            Assert.Equal(Feed.EdgeType.Tagged, pagePosts.Edge);
-            Assert.NotEmpty(pagePosts.Data);
         }
 
         [Fact]

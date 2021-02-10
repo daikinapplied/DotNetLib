@@ -19,11 +19,23 @@ namespace Daikin.DotNetLib.Core.Tests
         #endregion
 
         #region Methods
-        public Models.FakeJsonRequest BuildFakeRequest()
+        public FakeJsonRequest BuildFakeRequest()
         {
-            var request = new Models.FakeJsonRequest();
-            request.Token = _configuration.FakeJsonToken;
+            var request = new FakeJsonRequest
+            {
+                Token = _configuration.FakeJsonToken
+            };
             return request;
+        }
+
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // Configuration Checks
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        [Fact]
+        public void TestConfiguration()
+        {
+            Assert.NotEmpty(_configuration.FakeJsonUrl);
+            Assert.NotEmpty(_configuration.FakeJsonToken);
         }
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
