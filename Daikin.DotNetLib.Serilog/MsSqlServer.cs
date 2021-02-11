@@ -10,10 +10,19 @@ using Serilog.Sinks.MSSqlServer;
 
 namespace Daikin.DotNetLib.Serilog
 {
-    public static class MsSql
+    public static class MsSqlServer
     {
-        // Call with typeof(Startup) or typeof(Program)
-        public static LoggerConfiguration AddLogger(Type caller, IConfiguration configuration = null, string sqlConnectionStr = null, string tableName = "!_Serilog", IHostingEnvironment env = null)
+        /// <summary>
+        /// Add MSSQL Server to logger configuration with pre-defined custom columns
+        /// </summary>
+        /// <param name="loggerConfiguration">Chaining of LoggerConfiguration</param>
+        /// <param name="caller">typeof(Startup) or typeof(Program) will likely work</param>
+        /// <param name="configuration">(Optional) Read appsettings configuration</param>
+        /// <param name="sqlConnectionStr">(Optional) SQL Connection string - if not available, attempt to get from ConnectionStrings:DefaultConnection in the configuration</param>
+        /// <param name="tableName">(Optional) Table name for Serilog</param>
+        /// <param name="env">(Optional) Environment information - if not available, attempt to get Environmental Variable ASPNETCORE_ENVIRONMENT</param>
+        /// <returns></returns>
+        public static LoggerConfiguration Add(this LoggerConfiguration loggerConfiguration, Type caller, IConfiguration configuration = null, string sqlConnectionStr = null, string tableName = "!_Serilog", IHostingEnvironment env = null)
         {
             var appName = caller.GetTypeInfo().Assembly.GetName();
             var applicationName = appName.Name.Truncate(Constants.MaxLengthApplication);
@@ -44,8 +53,10 @@ namespace Daikin.DotNetLib.Serilog
             columnOptions.Store.Add(StandardColumn.LogEvent); // want JSON data
             columnOptions.Store.Remove(StandardColumn.Properties); // don't need XML data
 
-            var loggerConfiguration = new LoggerConfiguration()
-                .WriteTo.Console(outputTemplate: Theme.Template, theme: Theme.System)
+            if (loggerConfiguration == null) loggerConfiguration = new LoggerConfiguration();
+
+            loggerConfiguration
+                //.WriteTo.Console(outputTemplate: Theme.Template, theme: Theme.System)
                 .WriteTo.MSSqlServer(
                     connectionString: sqlConnectionStr,
                     sinkOptions: new MSSqlServerSinkOptions
