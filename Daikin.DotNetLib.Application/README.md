@@ -5,7 +5,8 @@ This is a .NET Standard 2.0 library to provide generic application-specific supp
 # Getting Started
 Use the library and take advantage of:
 
-- Assembly Version Information
+- Assembly Name and Version Information
+- Appsettings (and associated environments, usersecrets, environmental variable) configuration building
 - File and Folder Pathing
 - Status Result Management
 
