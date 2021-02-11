@@ -98,7 +98,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: 'Deploy PRD'
-    environment: 'Daikin.DotNetLib PRD'
+    environment: 'DotNetLib PRD'
     timeoutInMinutes: 30
     pool:
       name: $(AgentName)
