@@ -118,7 +118,7 @@ stages:
             displayName: '[NuGet.org publish]'
             inputs:
               targetType: filePath
-              filePath: '$(System.DefaultWorkingDirectory)/_Daikin.DotNetLib-CI/drop/NuGetPublish.ps1'
+              filePath: '$(System.DefaultWorkingDirectory)/NuGetPublish.ps1'
               arguments: '"$(daikinapplied-dotnetlib-nuget-apikey)" "$(daa-code-signing-subject)" "subject"'
 
 # ~End~
