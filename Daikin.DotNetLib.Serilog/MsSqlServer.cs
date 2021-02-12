@@ -31,6 +31,9 @@ namespace Daikin.DotNetLib.Serilog
             IHostingEnvironment env = null,
             MSSqlServerSinkOptions sinkOptions = null)
         {
+            if (loggerSinkConfiguration == null) throw new ArgumentNullException(nameof(loggerSinkConfiguration));
+            if (caller == null) throw new ArgumentNullException(nameof(caller));
+
             var appName = caller.GetTypeInfo().Assembly.GetName();
             var applicationName = appName.Name.Truncate(Constants.MaxLengthApplication);
             var applicationVersion = appName.Version?.ToString().Truncate(Constants.MaxLengthVersion);
