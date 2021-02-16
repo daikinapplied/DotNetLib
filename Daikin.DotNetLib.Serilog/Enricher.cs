@@ -52,25 +52,32 @@ namespace Daikin.DotNetLib.Serilog
 
         public static void AddMiddleware(IApplicationBuilder app)
         {
-            // Add Serilog Middleware for information injection
-            //app.UseMiddleware<SerilogMiddleware>();
-            app.Use(async (context, next) =>
+            try
             {
-                var properties = new List<ILogEventEnricher>
+                // Add Serilog Middleware for information injection
+                // app.UseMiddleware<SerilogMiddleware>();
+                app.Use(async (context, next) =>
                 {
-                    PropertyClientId(context),
-                    PropertyRemoteIp(context),
-                    PropertyUserAgent(context),
-                    PropertySession(context),
-                    PropertyUser(context),
-                    PropertyRequestId(context)
-                };
+                    var properties = new List<ILogEventEnricher>
+                    {
+                        PropertyClientId(context),
+                        PropertyRemoteIp(context),
+                        PropertyUserAgent(context),
+                        PropertySession(context),
+                        PropertyUser(context),
+                        PropertyRequestId(context)
+                    };
 
-                using (LogContext.Push(properties.ToArray()))
-                {
-                    await next.Invoke();
-                }
-            });
+                    using (LogContext.Push(properties.ToArray()))
+                    {
+                        await next.Invoke();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                PostLog(Constants.EventMessageInternal, Constants.EventIdInternal, ex.Message, ex.ToString(), LogType.Critical);
+            }
         }
 
         public static PropertyEnricher PropertyClientId(HttpContext context)
