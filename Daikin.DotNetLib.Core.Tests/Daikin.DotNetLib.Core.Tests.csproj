@@ -48,6 +48,7 @@
     <ProjectReference Include="..\Daikin.DotNetLib.Facebook\Daikin.DotNetLib.Facebook.csproj" />
     <ProjectReference Include="..\Daikin.DotNetLib.MsTeams\Daikin.DotNetLib.MsTeams.csproj" />
     <ProjectReference Include="..\Daikin.DotNetLib.Network\Daikin.DotNetLib.Network.csproj" />
+    <ProjectReference Include="..\Daikin.DotNetLib.Serilog\Daikin.DotNetLib.Serilog.csproj" />
   </ItemGroup>
 
 </Project>
