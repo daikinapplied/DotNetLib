@@ -76,7 +76,7 @@ namespace Daikin.DotNetLib.Serilog
                 sinkOptions: sinkOptions);
 
             return loggerConfiguration
-                .Enrich.FromLogContext()
+                .Enrich.FromLogContext() // Required to support custom fields
                 .Enrich.WithExceptionDetails()
                 .Enrich.WithProperty("Application", applicationName)
                 .Enrich.WithProperty("Version", applicationVersion)

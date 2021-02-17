@@ -6,6 +6,12 @@
         public const string SourceField = "Source";
         public const string EventIdField = "EventId";
         public const string DataField = "Data";
+        public const string UserField = "User";
+        public const string UserAgentField = "UserAgent";
+        public const string ClientField = "ClientId";
+        public const string RemoteIpField = "RemoteIp";
+        public const string SessionField = "Session";
+        public const string RequestField = "RequestId";
 
         public const int MaxLengthApplication = 50;
         public const int MaxLengthVersion = 10;
