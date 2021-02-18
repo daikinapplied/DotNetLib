@@ -22,9 +22,11 @@ These .NET Standard, Core, and Framework libraries are a collection of work inte
 # Getting Started
 This presumes a strong understanding of the following tools and technologies, and that they are installed.
 
-- Visual Studio 2019 releases (Community, Professional, or Enterprise), fully patched:
+- One of the following Visual Studio releases (Community, Professional, or Enterprise), fully patched:
+	- Visual Studio 2019
 - .NET Standard 2.0 libraries (used whenever possible)
-- .NET Framework 4.8 (for Windows-specific libraries)
+- .NET Framework 4.5.2 (maximizing backward compatibility with .NET Framework projects and still supported by Microsoft)
+- .NET Framework 4.7.2 (for DotNetNuke project to support DNN library requirements)
 - .NET 5 SDK (for xUnit Testing)
 - C# development
 - Web API (for specific projects)

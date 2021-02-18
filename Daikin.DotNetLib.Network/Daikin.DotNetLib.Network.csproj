@@ -4,11 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Daikin.DotNetLib.Network</RootNamespace>
     <ApplicationIcon>Images\network.ico</ApplicationIcon>
-    <Version>1.6.0</Version>
+    <Version>1.5.5</Version>
     <Authors>Web Development Team and Contributors</Authors>
     <Company>Daikin Applied Americas Inc</Company>
     <Product>Daikin.DotNetLib</Product>
-    <Copyright>Copyright © 2016-2021</Copyright>
+    <Copyright>Copyright © 2016-2020</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/DaikinApplied/DotNetLib</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>

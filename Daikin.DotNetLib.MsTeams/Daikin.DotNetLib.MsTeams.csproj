@@ -7,7 +7,7 @@
     <Company>Daikin Applied Americas Inc</Company>
     <Product>Daikin.DotNetLib</Product>
     <Description>Helper for communication to Microsoft Teams channels.</Description>
-    <Copyright>Copyright © 2020-2021</Copyright>
+    <Copyright>Copyright © 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/DaikinApplied/DotNetLib</PackageProjectUrl>
     <PackageIcon>teams.png</PackageIcon>
@@ -15,11 +15,10 @@
     <RepositoryUrl>https://github.com/DaikinApplied/DotNetLib</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
