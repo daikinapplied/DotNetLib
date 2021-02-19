@@ -22,6 +22,7 @@ namespace Daikin.DotNetLib.Serilog
         /// <param name="sqlConnectionStr">(Optional) SQL Connection string - if not available, attempt to get from ConnectionStrings:DefaultConnection in the configuration</param>
         /// <param name="env">(Optional) Environment information - if not available, attempt to get Environmental Variable ASPNETCORE_ENVIRONMENT</param>
         /// <param name="sinkOptions">Supples additional settings for the sink</param>
+        /// <param name="tableName">Name of the SQL table</param>
         /// <returns></returns>
         public static LoggerConfiguration DetailedMsSql(
             this LoggerSinkConfiguration loggerSinkConfiguration,
@@ -29,10 +30,12 @@ namespace Daikin.DotNetLib.Serilog
             IConfiguration configuration = null, 
             string sqlConnectionStr = null, 
             IHostingEnvironment env = null,
-            MSSqlServerSinkOptions sinkOptions = null)
+            MSSqlServerSinkOptions sinkOptions = null,
+            string tableName = "!_Serilog")
         {
             if (loggerSinkConfiguration == null) throw new ArgumentNullException(nameof(loggerSinkConfiguration));
             if (caller == null) throw new ArgumentNullException(nameof(caller));
+            if (string.IsNullOrEmpty(tableName)) throw new ArgumentNullException(nameof(tableName));
 
             var appName = caller.GetTypeInfo().Assembly.GetName();
             var applicationName = appName.Name.Truncate(Constants.MaxLengthApplication);
@@ -41,7 +44,7 @@ namespace Daikin.DotNetLib.Serilog
                 ? env.EnvironmentName.Truncate(Constants.MaxLengthEnvironment)
                 : Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Truncate(Constants.MaxLengthEnvironment);
             if (string.IsNullOrEmpty(sqlConnectionStr) && configuration != null) sqlConnectionStr = configuration["ConnectionStrings:DefaultConnection"];
-
+            if (string.IsNullOrEmpty(sqlConnectionStr)) throw new ArgumentException("Unable to determine database connection");
             var columnOptions = new ColumnOptions
             {
                 AdditionalColumns = new List<SqlColumn>
@@ -65,7 +68,7 @@ namespace Daikin.DotNetLib.Serilog
 
             if (sinkOptions == null)
             {
-                sinkOptions = new MSSqlServerSinkOptions { AutoCreateSqlTable = true, TableName = "!_Serilog" };
+                sinkOptions = new MSSqlServerSinkOptions { AutoCreateSqlTable = true, TableName = tableName };
 
             }
 
