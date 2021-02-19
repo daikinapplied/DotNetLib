@@ -35,13 +35,28 @@
         public const int EventIdAuthorizeStart = 27007;
         public const int EventIdAuthorizeSuccess = 27008;
         public const int EventIdAuthorizeFailure = 27009;
+        public const int EventIdInformation = 27027;
+        public const int EventIdDebug = 27099;
+        public const int EventIdDebugStart = 27098;
+        public const int EventIdDebugEnd = 27097;
 
         public const string EventMessageInternal = "Internal";
         public const string EventMessageStartup = "Startup";
         public const string EventMessageShutdown = "Shutdown";
         public const string EventMessageConfigure = "Configure";
         public const string EventMessageAuthenticate = "Authenticate";
+        public const string EventMessageAuthenticateStart = "Authentication Start";
+        public const string EventMessageAuthenticateSuccess = "Authentication Success";
+        public const string EventMessageAuthenticateFailure = "Authentication Failure";
         public const string EventMessageAuthorize = "Authorize";
+        public const string EventMessageAuthorizeStart = "Authorization Start";
+        public const string EventMessageAuthorizeSuccess = "Authorization Success";
+        public const string EventMessageAuthorizeFailure = "Authorize Failure";
+        public const string EventMessageInformation = "Information";
+        public const string EventMessageDebug = "Debug";
+        public const string EventMessageDebugStart = "Debug Start";
+        public const string EventMessageDebugEnd = "Debug End";
+
         #endregion
     }
 }
