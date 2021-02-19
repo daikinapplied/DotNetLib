@@ -35,10 +35,13 @@
         public const int EventIdAuthorizeStart = 27007;
         public const int EventIdAuthorizeSuccess = 27008;
         public const int EventIdAuthorizeFailure = 27009;
+        public const int EventIdTimerStart = 27010;
+        public const int EventIdTimerEnd = 27011;
         public const int EventIdInformation = 27027;
-        public const int EventIdDebug = 27099;
-        public const int EventIdDebugStart = 27098;
-        public const int EventIdDebugEnd = 27097;
+        public const int EventIdDebug = 27096;
+        public const int EventIdDebugStart = 27097;
+        public const int EventIdDebugEnd = 27098;
+        public const int EventIdException = 27099;
 
         public const string EventMessageInternal = "Internal";
         public const string EventMessageStartup = "Startup";
@@ -52,10 +55,13 @@
         public const string EventMessageAuthorizeStart = "Authorization Start";
         public const string EventMessageAuthorizeSuccess = "Authorization Success";
         public const string EventMessageAuthorizeFailure = "Authorize Failure";
+        public const string EventMessageTimerStart = "Time Started";
+        public const string EventMessageTimerEnd = "Time Ended";
         public const string EventMessageInformation = "Information";
         public const string EventMessageDebug = "Debug";
         public const string EventMessageDebugStart = "Debug Start";
         public const string EventMessageDebugEnd = "Debug End";
+        public const string EventMessageException = "Exception";
 
         #endregion
     }
