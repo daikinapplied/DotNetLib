@@ -23,12 +23,12 @@ namespace Daikin.DotNetLib.Serilog
         #region Methods
         public Task Invoke(HttpContext context)
         {
-            LogContext.PushProperty(Constants.UserField, PropertyUser(context));
-            LogContext.PushProperty(Constants.ClientField, PropertyClient(context));
-            LogContext.PushProperty(Constants.RemoteIpField, PropertyRemoteIp(context));
-            LogContext.PushProperty(Constants.UserAgentField, PropertyUserAgent(context));
-            LogContext.PushProperty(Constants.SessionField, PropertySession(context));
-            LogContext.PushProperty(Constants.RequestField, PropertyRequest(context));
+            LogContext.PushProperty(Logger.UserField, PropertyUser(context));
+            LogContext.PushProperty(Logger.ClientField, PropertyClient(context));
+            LogContext.PushProperty(Logger.RemoteIpField, PropertyRemoteIp(context));
+            LogContext.PushProperty(Logger.UserAgentField, PropertyUserAgent(context));
+            LogContext.PushProperty(Logger.SessionField, PropertySession(context));
+            LogContext.PushProperty(Logger.RequestField, PropertyRequest(context));
             return _next(context);
         }
         #endregion
@@ -39,11 +39,11 @@ namespace Daikin.DotNetLib.Serilog
             try
             {
                 // context.User.GetSubjectId()
-                return context.User.Identity?.Name.Truncate(Constants.MaxLengthUser);
+                return context.User.Identity?.Name.Truncate(LogColumns.MaxLengthUser);
             }
             catch (Exception ex)
             {
-                return ex.Message.Truncate(Constants.MaxLengthUser);
+                return ex.Message.Truncate(LogColumns.MaxLengthUser);
             }
         }
 
@@ -53,16 +53,16 @@ namespace Daikin.DotNetLib.Serilog
             {
                 var queryVars = HttpUtility.ParseQueryString(context.Request.QueryString.ToString());
                 var clientId = queryVars.Get("client_id");
-                if (!string.IsNullOrEmpty(clientId)) return clientId.Truncate(Constants.MaxLengthClientId);
+                if (!string.IsNullOrEmpty(clientId)) return clientId.Truncate(LogColumns.MaxLengthClientId);
                 var returnUrl = queryVars.Get("returnurl");
                 if (string.IsNullOrEmpty(returnUrl)) return null;
                 var queryReturnUrlVars = HttpUtility.ParseQueryString(HttpUtility.UrlDecode(returnUrl));
                 clientId = queryReturnUrlVars.Get("client_id");
-                return clientId.Truncate(Constants.MaxLengthClientId);
+                return clientId.Truncate(LogColumns.MaxLengthClientId);
             }
             catch (Exception ex)
             {
-                return ex.Message.Truncate(Constants.MaxLengthClientId);
+                return ex.Message.Truncate(LogColumns.MaxLengthClientId);
             }
         }
 
@@ -70,11 +70,11 @@ namespace Daikin.DotNetLib.Serilog
         {
             try
             {
-                return context.Connection.RemoteIpAddress?.ToString().Truncate(Constants.MaxLengthRemoteIp);
+                return context.Connection.RemoteIpAddress?.ToString().Truncate(LogColumns.MaxLengthRemoteIp);
             }
             catch (Exception ex)
             {
-                return ex.Message.Truncate(Constants.MaxLengthRemoteIp);
+                return ex.Message.Truncate(LogColumns.MaxLengthRemoteIp);
             }
         }
 
@@ -82,11 +82,11 @@ namespace Daikin.DotNetLib.Serilog
         {
             try
             {
-                return context.Request.Headers["User-Agent"].FirstOrDefault().Truncate(Constants.MaxLengthUserAgent);
+                return context.Request.Headers["User-Agent"].FirstOrDefault().Truncate(LogColumns.MaxLengthUserAgent);
             }
             catch (Exception ex)
             {
-                return ex.Message.Truncate(Constants.MaxLengthUserAgent);
+                return ex.Message.Truncate(LogColumns.MaxLengthUserAgent);
             }
         }
 
@@ -96,11 +96,11 @@ namespace Daikin.DotNetLib.Serilog
             {
                 var session = context.Request.Cookies["idsrv.session"];
                 if (string.IsNullOrEmpty(session)) session = context.Request.Headers["Session"].FirstOrDefault();
-                return session.Truncate(Constants.MaxLengthSession);
+                return session.Truncate(LogColumns.MaxLengthSession);
             }
             catch (Exception ex)
             {
-                return ex.Message.Truncate(Constants.MaxLengthSession);
+                return ex.Message.Truncate(LogColumns.MaxLengthSession);
             }
         }
 
@@ -108,11 +108,11 @@ namespace Daikin.DotNetLib.Serilog
         {
             try
             {
-                return context.TraceIdentifier.Truncate(Constants.MaxLengthRequestId);
+                return context.TraceIdentifier.Truncate(LogColumns.MaxLengthRequestId);
             }
             catch (Exception ex)
             {
-                return ex.Message.Truncate(Constants.MaxLengthRequestId);
+                return ex.Message.Truncate(LogColumns.MaxLengthRequestId);
             }
         }
         #endregion

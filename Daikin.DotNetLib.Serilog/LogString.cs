@@ -2,7 +2,7 @@
 
 namespace Daikin.DotNetLib.Serilog
 {
-    public static class String
+    public static class LogString
     {
         public static string Truncate(this string value, int maxLength)
         {

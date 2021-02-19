@@ -4,7 +4,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Daikin.DotNetLib.Serilog
 {
-    public static class Theme
+    public static class LogTheme
     {
         // https://github.com/serilog/serilog-sinks-console/tree/dev/src/Serilog.Sinks.Console/Sinks/SystemConsole/Themes
         public const string Template = "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} > {Message:lj}{Exception}{NewLine}";
