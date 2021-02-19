@@ -23,9 +23,9 @@ namespace Daikin.DotNetLib.Serilog
         /// <param name="sinkOptions">(Optional) Supples additional settings for the sink - if not specified, default settings used</param>
         /// <param name="restrictedToMinimumLevel">(Optional) Minimum Logging Level</param>
         /// <param name="columnOptions">(Optional) Column settings and definition - if not specified, default settings used</param>
-        /// <param name="tableName"(Optional) >Name of the SQL table - if not specified, default setting used</param>
+        /// <param name="tableName">(Optional)Name of the SQL table - if not specified, default setting used</param>
         /// <returns></returns>
-        public static LoggerConfiguration DetailedMsSql(
+        public static LoggerConfiguration LogAddMsSqlServer(
             this LoggerSinkConfiguration loggerSinkConfiguration,
             Type caller,
             string connectionString,

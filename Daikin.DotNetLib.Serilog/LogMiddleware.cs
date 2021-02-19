@@ -23,11 +23,12 @@ namespace Daikin.DotNetLib.Serilog
         #region Methods
         public Task Invoke(HttpContext context)
         {
-            LogContext.PushProperty(Logger.UserField, PropertyUser(context));
+            // Order Doesn't matter
             LogContext.PushProperty(Logger.ClientField, PropertyClient(context));
             LogContext.PushProperty(Logger.RemoteIpField, PropertyRemoteIp(context));
             LogContext.PushProperty(Logger.UserAgentField, PropertyUserAgent(context));
             LogContext.PushProperty(Logger.SessionField, PropertySession(context));
+            LogContext.PushProperty(Logger.UserField, PropertyUser(context));
             LogContext.PushProperty(Logger.RequestField, PropertyRequest(context));
             return _next(context);
         }

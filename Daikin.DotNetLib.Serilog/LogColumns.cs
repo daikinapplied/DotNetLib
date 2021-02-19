@@ -35,6 +35,7 @@ namespace Daikin.DotNetLib.Serilog
         {
             return new List<SqlColumn>
             {
+                // Order may matter - need to verify
                 new SqlColumn { ColumnName = "EventId", DataType = SqlDbType.Int, AllowNull = true },
                 new SqlColumn { ColumnName = "Application", DataType = SqlDbType.NVarChar, DataLength = MaxLengthApplication, AllowNull = true },
                 new SqlColumn { ColumnName = "Version", DataType = SqlDbType.NVarChar, DataLength = MaxLengthVersion, AllowNull = true },
