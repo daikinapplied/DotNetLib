@@ -21,44 +21,32 @@ namespace Daikin.DotNetLib.Serilog
         #endregion
 
         #region Functions
-        public static List<SqlColumn> Build(bool hasAll = true, bool hasWebServer = false, bool hasOAuth2 = false)
+
+        public static ColumnOptions DefaultColumnOptions()
         {
-            var buildColumns = Base();
-            if (hasWebServer || hasAll) { buildColumns.AddRange(WebServer());}
-            if (hasOAuth2 || hasAll) { buildColumns.AddRange(OAuth2());}
-            return buildColumns;
+            var columnOptions = new ColumnOptions {AdditionalColumns = DefaultColumns()};
+            columnOptions.Store.Add(StandardColumn.LogEvent); // Include JSON
+            columnOptions.Store.Remove(StandardColumn.MessageTemplate); 
+            columnOptions.Store.Remove(StandardColumn.Properties); // Exclude XML
+            return columnOptions;
         }
 
-        private static IEnumerable<SqlColumn> OAuth2()
+        public static List<SqlColumn> DefaultColumns()
         {
             return new List<SqlColumn>
             {
-                new SqlColumn { ColumnName = "ClientId", DataType = SqlDbType.NVarChar, DataLength = MaxLengthClientId, AllowNull = true },
-                new SqlColumn { ColumnName = "Session", DataType = SqlDbType.NVarChar, DataLength = MaxLengthSession, AllowNull = true },
-            };
-        }
-
-        private static IEnumerable<SqlColumn> WebServer()
-        {
-            return new List<SqlColumn>
-            {
-                new SqlColumn { ColumnName = "User", DataType = SqlDbType.NVarChar, DataLength = MaxLengthUser, AllowNull = true },
-                new SqlColumn { ColumnName = "RemoteIp", DataType = SqlDbType.NVarChar, DataLength = MaxLengthRemoteIp, AllowNull = true },
-                new SqlColumn { ColumnName = "UserAgent", DataType = SqlDbType.NVarChar, DataLength = MaxLengthUserAgent, AllowNull = true },
-                new SqlColumn { ColumnName = "RequestId", DataType = SqlDbType.NVarChar, DataLength = MaxLengthRequestId, AllowNull = true },
-            };
-        }
-
-        private static List<SqlColumn> Base()
-        {
-            return new List<SqlColumn>
-            {
-                new SqlColumn { ColumnName = "Environment", DataType = SqlDbType.NVarChar, DataLength = MaxLengthEnvironment, AllowNull = true },
-                new SqlColumn { ColumnName = "Source", DataType = SqlDbType.NVarChar, DataLength = MaxLengthSource, AllowNull = true },
-                new SqlColumn { ColumnName = "Data", DataType = SqlDbType.NVarChar, DataLength = MaxLengthData, AllowNull = true },
                 new SqlColumn { ColumnName = "EventId", DataType = SqlDbType.Int, AllowNull = true },
                 new SqlColumn { ColumnName = "Application", DataType = SqlDbType.NVarChar, DataLength = MaxLengthApplication, AllowNull = true },
-                new SqlColumn { ColumnName = "Version", DataType = SqlDbType.NVarChar, DataLength = MaxLengthVersion, AllowNull = true }
+                new SqlColumn { ColumnName = "Version", DataType = SqlDbType.NVarChar, DataLength = MaxLengthVersion, AllowNull = true },
+                new SqlColumn { ColumnName = "RemoteIp", DataType = SqlDbType.NVarChar, DataLength = MaxLengthRemoteIp, AllowNull = true },
+                new SqlColumn { ColumnName = "ClientId", DataType = SqlDbType.NVarChar, DataLength = MaxLengthClientId, AllowNull = true },
+                new SqlColumn { ColumnName = "Environment", DataType = SqlDbType.NVarChar, DataLength = MaxLengthEnvironment, AllowNull = true },
+                new SqlColumn { ColumnName = "User", DataType = SqlDbType.NVarChar, DataLength = MaxLengthUser, AllowNull = true },
+                new SqlColumn { ColumnName = "Source", DataType = SqlDbType.NVarChar, DataLength = MaxLengthSource, AllowNull = true },
+                new SqlColumn { ColumnName = "Session", DataType = SqlDbType.NVarChar, DataLength = MaxLengthSession, AllowNull = true },
+                new SqlColumn { ColumnName = "UserAgent", DataType = SqlDbType.NVarChar, DataLength = MaxLengthUserAgent, AllowNull = true },
+                new SqlColumn { ColumnName = "RequestId", DataType = SqlDbType.NVarChar, DataLength = MaxLengthRequestId, AllowNull = true },
+                new SqlColumn { ColumnName = "Data", DataType = SqlDbType.NVarChar, DataLength = MaxLengthData, AllowNull = true }
             };
         }
         #endregion
