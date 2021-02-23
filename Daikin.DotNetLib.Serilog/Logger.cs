@@ -73,7 +73,7 @@ namespace Daikin.DotNetLib.Serilog
             var log = Log
                 .ForContext(SourceField, source.Truncate(LogColumns.MaxLengthSource))
                 .ForContext(EventIdField, eventId)
-                .ForContext(DataField, data.Truncate(LogColumns.MaxLengthData));
+                .ForContext(DataField, data);
 
             switch (logType)
             {

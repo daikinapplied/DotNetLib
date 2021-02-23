@@ -17,7 +17,7 @@ namespace Daikin.DotNetLib.Serilog
         public const int MaxLengthSession = 50;
         public const int MaxLengthRequestId = 25;
         public const int MaxLengthUserAgent = 200;
-        public const int MaxLengthData = 255;
+        //public const int MaxLengthData = 255;
         #endregion
 
         #region Functions
@@ -47,7 +47,7 @@ namespace Daikin.DotNetLib.Serilog
                 new SqlColumn { ColumnName = "Session", DataType = SqlDbType.NVarChar, DataLength = MaxLengthSession, AllowNull = true },
                 new SqlColumn { ColumnName = "UserAgent", DataType = SqlDbType.NVarChar, DataLength = MaxLengthUserAgent, AllowNull = true },
                 new SqlColumn { ColumnName = "RequestId", DataType = SqlDbType.NVarChar, DataLength = MaxLengthRequestId, AllowNull = true },
-                new SqlColumn { ColumnName = "Data", DataType = SqlDbType.NVarChar, DataLength = MaxLengthData, AllowNull = true }
+                new SqlColumn { ColumnName = "Data", DataType = SqlDbType.NVarChar, AllowNull = true }
             };
         }
         #endregion

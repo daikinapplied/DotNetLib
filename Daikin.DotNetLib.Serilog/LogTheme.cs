@@ -6,9 +6,11 @@ namespace Daikin.DotNetLib.Serilog
 {
     public static class LogTheme
     {
-        // https://github.com/serilog/serilog-sinks-console/tree/dev/src/Serilog.Sinks.Console/Sinks/SystemConsole/Themes
-        public const string Template = "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} > {Message:lj}{Exception}{NewLine}";
+        // https://github.com/serilog/serilog/wiki/Formatting-Output
+        public const string TemplateSimple = "[{Timestamp:HH:mm:ss} {Level:u3} {EventId}] > {Message:lj}{Exception}{NewLine}";
+        public const string TemplateDetail = "[{Timestamp:HH:mm:ss} {Level:u3} {EventId}] > {Message:lj}{NewLine}{Properties}{NewLine}{NewLine}";
 
+        // https://github.com/serilog/serilog-sinks-console/tree/dev/src/Serilog.Sinks.Console/Sinks/SystemConsole/Themes
         public static SystemConsoleTheme System { get; } = new SystemConsoleTheme(
            new Dictionary<ConsoleThemeStyle, SystemConsoleThemeStyle>
            {
