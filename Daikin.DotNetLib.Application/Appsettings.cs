@@ -17,16 +17,11 @@ namespace Daikin.DotNetLib.Application
         public static IConfigurationRoot GetConfiguration(string location, string userSecretsId = null, params string[] environments)
         {
             var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", true)
                 .SetBasePath(location)
-                .AddEnvironmentVariables();
-
+                .AddJsonFile("appsettings.json", true);
+            AddEnvironments(ref configurationBuilder, environments);
             if (!string.IsNullOrEmpty(userSecretsId)) configurationBuilder.AddUserSecrets(userSecretsId);
-            if (environments == null) return configurationBuilder.Build();
-            foreach (var environment in environments)
-            {
-                configurationBuilder.AddJsonFile($"appsettings.{environment}.json", true);
-            }
+            configurationBuilder.AddEnvironmentVariables();
             return configurationBuilder.Build();
         }
 
@@ -42,16 +37,11 @@ namespace Daikin.DotNetLib.Application
             var assembly = type.GetTypeInfo().Assembly;
             var location = Path.GetDirectoryName(assembly.Location);
             var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", true)
                 .SetBasePath(location)
-                .AddEnvironmentVariables();
-
+                .AddJsonFile("appsettings.json", true);
+            AddEnvironments(ref configurationBuilder, environments);
             if (useSecrets) configurationBuilder.AddUserSecrets(assembly);
-            if (environments == null) return configurationBuilder.Build();
-            foreach (var environment in environments)
-            {
-                configurationBuilder.AddJsonFile($"appsettings.{environment}.json", true);
-            }
+            configurationBuilder.AddEnvironmentVariables();
             return configurationBuilder.Build();
         }
 
@@ -66,6 +56,15 @@ namespace Daikin.DotNetLib.Application
         {
             var location = Path.GetDirectoryName(type.GetTypeInfo().Assembly.Location);
             return GetConfiguration(location, userSecretsId, environments);
+        }
+
+        private static void AddEnvironments(ref IConfigurationBuilder configurationBuilder, params string[] environments)
+        {
+            if (environments == null) return;
+            foreach (var environment in environments)
+            {
+                configurationBuilder.AddJsonFile($"appsettings.{environment}.json", true);
+            }
         }
     }
 }

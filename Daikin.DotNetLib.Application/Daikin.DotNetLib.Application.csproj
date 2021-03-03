@@ -15,7 +15,7 @@
     <RepositoryType>Git</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.1.4</Version>
+    <Version>1.1.5</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>application.png</PackageIcon>
   </PropertyGroup>
