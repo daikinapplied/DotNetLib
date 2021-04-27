@@ -30,6 +30,7 @@ namespace Daikin.DotNetLib.Network
             #endif
         }
 
+
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Object Input, Object Output
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,19 +48,29 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return object from WebApi call</returns>
         /// <remarks>WebApi only allows for one object each way</remarks>
-        public static (TOutput, HttpResponseMessage) Call<TInput, TOutput>(string serverUrl, TInput data, HttpMethod method = null, string accessToken = "", bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static (TOutput, HttpResponseMessage) Call<TInput, TOutput>(
+            string serverUrl, 
+            TInput data, 
+            HttpMethod method = null, 
+            string accessToken = "", 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             try
             {
-                using (var httpClient = HttpConnection.Client(serverUrl, "application/json", useProxy, proxyServer, proxyPort, false, accessToken, httpTimeoutSeconds))
+                using (var httpClient = HttpConnection.Client(serverUrl, HttpConnection.MimeType, useProxy, proxyServer, proxyPort, false, accessToken, httpTimeoutSeconds, tokenScheme))
                 {
                     if (method == null) { method = HttpMethod.Put; }
                     var httpRequestMessage = new HttpRequestMessage { Method = method, RequestUri = new Uri(serverUrl) };
                     if (method == HttpMethod.Post || method == HttpMethod.Put)
                     {
-                        httpRequestMessage.Content = new StringContent(Json.ObjectToString(data), Encoding.UTF8, "application/json");
+                        httpRequestMessage.Content = new StringContent(Json.ObjectToString(data), Encoding.UTF8, HttpConnection.MimeType);
                     }
                     var response = httpClient.SendAsync(httpRequestMessage).Result;
                     #if DEBUG
@@ -91,12 +102,23 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return object from WebApi call</returns>
         /// <remarks>WebApi only allows for one object each way</remarks>
-        public static (TOutput, HttpResponseMessage) Call<TInput, TOutput>(string serverUrl, string serverPath, TInput data, HttpMethod method = null, string accessToken = "", bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static (TOutput, HttpResponseMessage) Call<TInput, TOutput>(
+            string serverUrl, 
+            string serverPath, 
+            TInput data, 
+            HttpMethod method = null, 
+            string accessToken = "", 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
-            var (output, response) = Call<TInput, TOutput>(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds);
+            var (output, response) = Call<TInput, TOutput>(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme);
             return (output, response);
         }
 
@@ -116,12 +138,21 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return object from WebApi call</returns>
-        public static (TOutput, HttpResponseMessage) Call<TOutput>(string serverUrl, HttpMethod method = null, string accessToken = "", bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static (TOutput, HttpResponseMessage) Call<TOutput>(
+            string serverUrl, 
+            HttpMethod method = null, 
+            string accessToken = "", 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             try
             {
-                using (var httpClient = HttpConnection.Client(serverUrl, "application/json", useProxy, proxyServer, proxyPort, false, accessToken, httpTimeoutSeconds))
+                using (var httpClient = HttpConnection.Client(serverUrl, HttpConnection.MimeType, useProxy, proxyServer, proxyPort, false, accessToken, httpTimeoutSeconds, tokenScheme))
                 {
                     if (method == null) { method = HttpMethod.Put; }
                     var httpRequestMessage = new HttpRequestMessage { Method = method, RequestUri = new Uri(serverUrl) };
@@ -153,13 +184,24 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return object from WebApi call</returns>
-        public static (TOutput, HttpResponseMessage) Call<TOutput>(string serverUrl, string serverPath, HttpMethod method = null, string accessToken = "", bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static (TOutput, HttpResponseMessage) Call<TOutput>(
+            string serverUrl, 
+            string serverPath, 
+            HttpMethod method = null, 
+            string accessToken = "", 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
-            var (output, response) = Call<TOutput>(serverFullUrl, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds);
+            var (output, response) = Call<TOutput>(serverFullUrl, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme);
             return (output, response);
         }
+
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Object Input, string Output
@@ -177,18 +219,28 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return string (Json) from WebApi call</returns>
-        public static string Call<TInput>(string serverUrl, TInput data, HttpMethod method = null, string accessToken = "", bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static string Call<TInput>(
+            string serverUrl, 
+            TInput data, 
+            HttpMethod method = null, 
+            string accessToken = "", 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut,
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             try
             {
-                using (var httpClient = HttpConnection.Client(serverUrl, "application/json", useProxy, proxyServer, proxyPort, false, accessToken, httpTimeoutSeconds))
+                using (var httpClient = HttpConnection.Client(serverUrl, HttpConnection.MimeType, useProxy, proxyServer, proxyPort, false, accessToken, httpTimeoutSeconds, tokenScheme))
                 {
                     if (method == null) { method = HttpMethod.Put; }
                     var httpRequestMessage = new HttpRequestMessage { Method = method, RequestUri = new Uri(serverUrl) };
                     if (method == HttpMethod.Post || method == HttpMethod.Put)
                     {
-                        httpRequestMessage.Content = new StringContent(Json.ObjectToString(data), Encoding.UTF8, "application/json");
+                        httpRequestMessage.Content = new StringContent(Json.ObjectToString(data), Encoding.UTF8, HttpConnection.MimeType);
                     }
                     var response = httpClient.SendAsync(httpRequestMessage).Result;
                     #if DEBUG
@@ -218,12 +270,24 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return string (Json) from WebApi call</returns>
-        public static string Call<TInput>(string serverUrl, string serverPath, TInput data, HttpMethod method = null, string accessToken = "", bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static string Call<TInput>(
+            string serverUrl, 
+            string serverPath, 
+            TInput data, 
+            HttpMethod method = null, 
+            string accessToken = "", 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
-            return Call(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds);
+            return Call(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme);
         }
+
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // No Object Input, string Output
@@ -239,12 +303,21 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return string (Json) from WebApi call</returns>
-        public static string Call(string serverUrl, HttpMethod method = null, string accessToken = "", bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static string Call(
+            string serverUrl, 
+            HttpMethod method = null, 
+            string accessToken = "", 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             try
             {
-                using (var httpClient = HttpConnection.Client(serverUrl, "application/json", useProxy, proxyServer, proxyPort, false, accessToken, httpTimeoutSeconds))
+                using (var httpClient = HttpConnection.Client(serverUrl, "application/json", useProxy, proxyServer, proxyPort, false, accessToken, httpTimeoutSeconds, tokenScheme))
                 {
                     if (method == null) { method = HttpMethod.Put; }
                     var httpRequestMessage = new HttpRequestMessage { Method = method, RequestUri = new Uri(serverUrl) };
@@ -274,31 +347,50 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return string (Json) from WebApi call</returns>
-        public static string Call(string serverUrl, string serverPath, HttpMethod method = null, string accessToken = "", bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static string Call(
+            string serverUrl, 
+            string serverPath, 
+            HttpMethod method = null, 
+            string accessToken = "", 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
             if (method == null) method = HttpMethod.Get;
-            return Call(serverFullUrl, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds);
+            return Call(serverFullUrl, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme);
         }
-        
+
         /// <summary>
         /// Used for only receiving an output (no input) from a WebApi via GET with Basic Auth - useful for debugging return calls to determine json structure
         /// </summary>
         /// <param name="serverUrl">Server URL without path</param>
         /// <param name="serverPath">Server Path (method path/call)</param>
-        /// <param name="method">WebApi method type GET, POST, PUT (GET is default)</param>
         /// <param name="username">Basic Auth Username</param>
         /// <param name="password">Basic Auth Password</param>
         /// <param name="useProxy">Whether to use a proxy (Optional)</param>
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return string (Json) from WebApi call</returns>
-        public static string Call(string serverUrl, string serverPath, string username, string password, HttpMethod method = null, bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static string Call(
+            string serverUrl, 
+            string serverPath, 
+            string username, 
+            string password, 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
-            return Call(serverFullUrl, username, password, useProxy, proxyServer, proxyPort, httpTimeoutSeconds);
+            return Call(serverFullUrl, username, password, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme);
         }
 
         /// <summary>
@@ -311,12 +403,21 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyServer">Proxy server URL (Optional)</param>
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
+        /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
         /// <returns>return string (Json) from WebApi call</returns>
-        public static string Call(string serverUrl, string username, string password, bool useProxy = false, string proxyServer = "", int proxyPort = 443, int httpTimeoutSeconds = 60)
+        public static string Call(
+            string serverUrl, 
+            string username, 
+            string password, 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpConnection.HttpsPort, 
+            int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut,
+            string tokenScheme = HttpConnection.AccessTokenScheme)
         {
             try
             {
-                using (var httpClient = HttpConnection.Client(serverUrl, useProxy: useProxy, proxyServer: proxyServer, proxyPort: proxyPort, httpTimeoutSeconds: httpTimeoutSeconds))
+                using (var httpClient = HttpConnection.Client(serverUrl, useProxy: useProxy, proxyServer: proxyServer, proxyPort: proxyPort, httpTimeoutSeconds: httpTimeoutSeconds, tokenHeader: tokenScheme))
                 {
                     var credentialsEncoding = Encoding.ASCII.GetBytes($"{username}:{password}");
                     httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentialsEncoding));

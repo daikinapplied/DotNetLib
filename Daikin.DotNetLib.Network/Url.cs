@@ -5,8 +5,16 @@ namespace Daikin.DotNetLib.Network
     public static class Url
     {
         #region Functions
+
+        public static string Concatenate(UrlPaths paths, UrlPage page = null, UrlQueries urlQueries = null)
+        {
+            var urlBuild = paths.ToString() + page + (urlQueries != null && urlQueries.HasData() ? $"?{urlQueries.ToString()}" : string.Empty);
+            return urlBuild;
+        }
+
         public static string Concatenate(string serverBaseUrl, string path)
         {
+            if (string.IsNullOrEmpty(serverBaseUrl)) return path;
             return (serverBaseUrl + (!serverBaseUrl.EndsWith("/") && !path.StartsWith("/") ? "/" : string.Empty) + path);
         }
 
@@ -28,6 +36,12 @@ namespace Daikin.DotNetLib.Network
             var serverPath = serverUri.AbsolutePath;
             var query = serverUri.Query.Substring(1); // eliminate ?
             return (serverUrl, serverPath, query);
+        }
+
+        public static (UrlPaths, UrlQueries) SplitUrlToObjects(string serverFullUrl)
+        {
+            var serverUri = new Uri(serverFullUrl);
+            return (new UrlPaths(serverUri.Scheme + "://" + serverUri.Host, serverUri.AbsolutePath), new UrlQueries(serverUri.Query.Substring(1)));
         }
         #endregion
     }

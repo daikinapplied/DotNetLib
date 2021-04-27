@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using Daikin.DotNetLib.Core.Tests.Models;
 using Daikin.DotNetLib.Network;
 using Xunit;

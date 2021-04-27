@@ -2,12 +2,20 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Daikin.DotNetLib.Network
 {
     public static class HttpConnection
     {
+        #region Constants
+        public const string AccessTokenScheme = "Bearer";
+        public const int ConnectionTimeOut = 60;
+        public const string MimeType = "application/json";
+        public const int HttpsPort = 443;
+        #endregion
+
         #region Functions
         /// <summary>
         /// Setup a HTTP Client
@@ -20,8 +28,18 @@ namespace Daikin.DotNetLib.Network
         /// <param name="bypassProxyOnLocal">Whether to ignore the proxy server for a local connection (e.g. same computer or LAN)</param>
         /// <param name="accessToken">Access token for OAuth</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response</param>
+        /// <param name="tokenHeader">Token reference to include in the HTTP header</param>
         /// <returns>HTTP Client Object</returns>
-        public static HttpClient Client(string serverUrl, string mimeType = "application/json", bool useProxy = false, string proxyServer = "", int proxyPort = 443, bool bypassProxyOnLocal = false, string accessToken = "", int httpTimeoutSeconds = 60)
+        public static HttpClient Client(
+            string serverUrl, 
+            string mimeType = MimeType, 
+            bool useProxy = false, 
+            string proxyServer = "", 
+            int proxyPort = HttpsPort, 
+            bool bypassProxyOnLocal = false, 
+            string accessToken = "", 
+            int httpTimeoutSeconds = ConnectionTimeOut, 
+            string tokenHeader = AccessTokenScheme)
         {
             HttpClient httpClient;
             if (useProxy)
@@ -40,15 +58,19 @@ namespace Daikin.DotNetLib.Network
                 httpClient = new HttpClient { BaseAddress = new Uri(serverUrl), Timeout = TimeSpan.FromSeconds(httpTimeoutSeconds) };
             }
 
-            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Connection.Clear();
+            httpClient.DefaultRequestHeaders.Connection.Add("keep-alive");
+            httpClient.DefaultRequestHeaders.UserAgent.Clear();
+            httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Daikin.DotNetLib.Network", Assembly.GetExecutingAssembly().GetName().Version.ToString()));
             if (!string.IsNullOrWhiteSpace(mimeType))
             {
+                httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mimeType));
             }
 
             if (!string.IsNullOrWhiteSpace(accessToken))
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenHeader ?? AccessTokenScheme, accessToken);
             }
             return httpClient;
         }
