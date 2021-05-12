@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Daikin.DotNetLib.Network</RootNamespace>
     <ApplicationIcon>Images\network.ico</ApplicationIcon>
-    <Version>1.5.7</Version>
+    <Version>1.5.8</Version>
     <Authors>Web Development Team and Contributors</Authors>
     <Company>Daikin Applied Americas Inc</Company>
     <Product>Daikin.DotNetLib</Product>

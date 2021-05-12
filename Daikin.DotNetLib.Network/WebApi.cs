@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Daikin.DotNetLib.Network
 {
@@ -49,6 +50,7 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
         /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
+        /// <param name="jsonSettings">Json settings options</param>
         /// <returns>return object from WebApi call</returns>
         /// <remarks>WebApi only allows for one object each way</remarks>
         public static (TOutput, HttpResponseMessage) Call<TInput, TOutput>(
@@ -60,7 +62,8 @@ namespace Daikin.DotNetLib.Network
             string proxyServer = "", 
             int proxyPort = HttpConnection.HttpsPort, 
             int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
-            string tokenScheme = HttpConnection.AccessTokenScheme)
+            string tokenScheme = HttpConnection.AccessTokenScheme,
+            JsonSerializerSettings jsonSettings = null)
         {
             try
             {
@@ -70,7 +73,7 @@ namespace Daikin.DotNetLib.Network
                     var httpRequestMessage = new HttpRequestMessage { Method = method, RequestUri = new Uri(serverUrl) };
                     if (method == HttpMethod.Post || method == HttpMethod.Put)
                     {
-                        httpRequestMessage.Content = new StringContent(Json.ObjectToString(data), Encoding.UTF8, HttpConnection.MimeType);
+                        httpRequestMessage.Content = new StringContent(Json.ObjectToString(data, jsonSettings), Encoding.UTF8, HttpConnection.MimeType);
                     }
                     var response = httpClient.SendAsync(httpRequestMessage).Result;
                     #if DEBUG
@@ -103,6 +106,7 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
         /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
+        /// <param name="jsonSettings">Json settings options</param>
         /// <returns>return object from WebApi call</returns>
         /// <remarks>WebApi only allows for one object each way</remarks>
         public static (TOutput, HttpResponseMessage) Call<TInput, TOutput>(
@@ -115,10 +119,11 @@ namespace Daikin.DotNetLib.Network
             string proxyServer = "", 
             int proxyPort = HttpConnection.HttpsPort, 
             int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
-            string tokenScheme = HttpConnection.AccessTokenScheme)
+            string tokenScheme = HttpConnection.AccessTokenScheme,
+            JsonSerializerSettings jsonSettings = null)
         {
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
-            var (output, response) = Call<TInput, TOutput>(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme);
+            var (output, response) = Call<TInput, TOutput>(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme, jsonSettings);
             return (output, response);
         }
 
@@ -139,6 +144,7 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
         /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
+        /// <param name="jsonSettings">Json settings options</param>
         /// <returns>return object from WebApi call</returns>
         public static (TOutput, HttpResponseMessage) Call<TOutput>(
             string serverUrl, 
@@ -148,7 +154,8 @@ namespace Daikin.DotNetLib.Network
             string proxyServer = "", 
             int proxyPort = HttpConnection.HttpsPort, 
             int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
-            string tokenScheme = HttpConnection.AccessTokenScheme)
+            string tokenScheme = HttpConnection.AccessTokenScheme,
+            JsonSerializerSettings jsonSettings = null)
         {
             try
             {
@@ -162,7 +169,7 @@ namespace Daikin.DotNetLib.Network
                     #endif
                     return (!response.IsSuccessStatusCode 
                                 ? default 
-                                : Json.ObjectFromString<TOutput>(response.Content.ReadAsStringAsync().Result),
+                                : Json.ObjectFromString<TOutput>(response.Content.ReadAsStringAsync().Result, jsonSettings),
                             response);
                 }
             }
@@ -185,6 +192,7 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
         /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
+        /// <param name="jsonSettings">Json settings options</param>
         /// <returns>return object from WebApi call</returns>
         public static (TOutput, HttpResponseMessage) Call<TOutput>(
             string serverUrl, 
@@ -195,10 +203,11 @@ namespace Daikin.DotNetLib.Network
             string proxyServer = "", 
             int proxyPort = HttpConnection.HttpsPort, 
             int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
-            string tokenScheme = HttpConnection.AccessTokenScheme)
+            string tokenScheme = HttpConnection.AccessTokenScheme,
+            JsonSerializerSettings jsonSettings = null)
         {
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
-            var (output, response) = Call<TOutput>(serverFullUrl, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme);
+            var (output, response) = Call<TOutput>(serverFullUrl, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme, jsonSettings);
             return (output, response);
         }
 
@@ -220,6 +229,7 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
         /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
+        /// <param name="jsonSettings">Json settings options</param>
         /// <returns>return string (Json) from WebApi call</returns>
         public static string Call<TInput>(
             string serverUrl, 
@@ -230,7 +240,8 @@ namespace Daikin.DotNetLib.Network
             string proxyServer = "", 
             int proxyPort = HttpConnection.HttpsPort, 
             int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut,
-            string tokenScheme = HttpConnection.AccessTokenScheme)
+            string tokenScheme = HttpConnection.AccessTokenScheme,
+            JsonSerializerSettings jsonSettings = null)
         {
             try
             {
@@ -240,7 +251,7 @@ namespace Daikin.DotNetLib.Network
                     var httpRequestMessage = new HttpRequestMessage { Method = method, RequestUri = new Uri(serverUrl) };
                     if (method == HttpMethod.Post || method == HttpMethod.Put)
                     {
-                        httpRequestMessage.Content = new StringContent(Json.ObjectToString(data), Encoding.UTF8, HttpConnection.MimeType);
+                        httpRequestMessage.Content = new StringContent(Json.ObjectToString(data, jsonSettings), Encoding.UTF8, HttpConnection.MimeType);
                     }
                     var response = httpClient.SendAsync(httpRequestMessage).Result;
                     #if DEBUG
@@ -271,6 +282,7 @@ namespace Daikin.DotNetLib.Network
         /// <param name="proxyPort">Proxy server TCP port (Optional)</param>
         /// <param name="httpTimeoutSeconds">Number of seconds to wait for the HTTP response (Optional)</param>
         /// <param name="tokenScheme">Token reference to include in the HTTP header (Optional)</param>
+        /// <param name="jsonSettings">Json settings options</param>
         /// <returns>return string (Json) from WebApi call</returns>
         public static string Call<TInput>(
             string serverUrl, 
@@ -282,10 +294,11 @@ namespace Daikin.DotNetLib.Network
             string proxyServer = "", 
             int proxyPort = HttpConnection.HttpsPort, 
             int httpTimeoutSeconds = HttpConnection.ConnectionTimeOut, 
-            string tokenScheme = HttpConnection.AccessTokenScheme)
+            string tokenScheme = HttpConnection.AccessTokenScheme,
+            JsonSerializerSettings jsonSettings = null)
         {
             var serverFullUrl = Url.Concatenate(serverUrl, serverPath);
-            return Call(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme);
+            return Call(serverFullUrl, data, method, accessToken, useProxy, proxyServer, proxyPort, httpTimeoutSeconds, tokenScheme, jsonSettings);
         }
 
 
