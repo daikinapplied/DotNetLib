@@ -15,7 +15,10 @@ namespace Daikin.DotNetLib.Network
         /// <returns>JSON String</returns>
         public static string ObjectToString(object obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         /// <summary>
@@ -26,7 +29,10 @@ namespace Daikin.DotNetLib.Network
         /// <returns>JSON String</returns>
         public static string ObjectToString(object obj, Formatting formatting)
         {
-            return JsonConvert.SerializeObject(obj, formatting);
+            return JsonConvert.SerializeObject(obj, formatting, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         /// <summary>
@@ -36,7 +42,10 @@ namespace Daikin.DotNetLib.Network
         /// <returns>JSON String</returns>
         public static string ListToString(List<string> list)
         {
-            return JsonConvert.SerializeObject(list);
+            return JsonConvert.SerializeObject(list, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         /// <summary>
@@ -47,7 +56,10 @@ namespace Daikin.DotNetLib.Network
         /// <returns>Object</returns>
         public static T ObjectFromString<T>(string jsonString)
         {
-            return JsonConvert.DeserializeObject<T>(jsonString);
+            return JsonConvert.DeserializeObject<T>(jsonString, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
         }
 
         /// <summary>
