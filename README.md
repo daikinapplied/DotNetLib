@@ -1,19 +1,19 @@
 # DotNetLib Projects
 The following specific projects are available, used to create corresponding NuGet packages for NuGet.org.  Read their associated readme file for specific details.
 
-| Library                                                                    | NuGet Package (and specific README)                                                                                                                                              |
-|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|<img src="Daikin.DotNetLib.Serilog/Images/serilog.png" width="64"/>         | [Daikin.DotNetLib.Serilog](Daikin.DotNetLib.Serilog/README.md) are contains helper functions to assist with Serilog logging usage, especially with Microsoft and Azure SQL Server|
-|<img src="Daikin.DotNetLib.Application/Images/application.png" width="64"/> | [Daikin.DotNetLib.Application](Daikin.DotNetLib.Application/README.md) has basic functions to generically assist with applications                                               |
-|<img src="Daikin.DotNetLib.Data/Images/data.png" width="64"/>               | [Daikin.DotNetLib.Data](Daikin.DotNetLib.Data/README.md) contains basic classes to assist with specific data types                                                               |
-|<img src="Daikin.DotNetLib.DotNetNuke/Images/dotnetnuke.png" width="64"/>   | [Daikin.DotNetLib.DotNetNuke](Daikin.DotNetLib.DotNetNuke/README.md) supports Module Development on DNN (formerly DotNetNuke), the C# open source Content Management System (CMS)|
-|<img src="Daikin.DotNetLib.Facebook/Images/facebook.png" width="64"/>       | [Daikin.DotNetLib.Facebook](Daikin.DotNetLib.Facebook/README.md) supports Facebook API calls to pull content for a single source of information                                  |
-|<img src="Daikin.DotNetLib.Security/Images/security.png" width="64"/>       | [Daikin.DotNetLib.Security](Daikin.DotNetLib.Security/README.md) provides security helper to make it easier to encrypt and decrypt data                                          |
-|<img src="Daikin.DotNetLib.Network/Images/network.png" width="64"/>         | [Daikin.DotNetLib.Network](Daikin.DotNetLib.Network/README.md) are helpers for making Web Api calls (typically JSON-based), SMTP, Networking, etc. calls                         |
-|<img src="Daikin.DotNetLib.Windows/Images/windows.png" width="64"/>         | [Daikin.DotNetLib.Windows](Daikin.DotNetLib.Windows/README.md) are helpers for Windows-based applications                                                                        |
-|<img src="Daikin.DotNetLib.Serial/Images/serial.png" width="64"/>           | [Daikin.DotNetLib.Serial](Daikin.DotNetLib.Serial/README.md) are Windows-based USB and Serial port helpers for Windows-based applications                                        |
-|<img src="Daikin.DotNetLib.MsTeams/Images/teams.png" width="64"/>           | [Daikin.DotNetLib.MsTeams](Daikin.DotNetLib.MsTeams/README.md) are helpers Microsoft Teams integration                                                                           |
-|<img src="Daikin.DotNetLib.Core.Tests/Images/debugging.png" width="64"/>    | [Daikin.DotNetLib.Core.Tests](Daikin.DotNetLib.Core.Tests/README.md) are .NET Core xUnit Unit Tests, serves as coding samples                                                    |
+| Library                                                                    | Framework            | NuGet Package and Specific Readme Information                                                                                                                                                                                                                                                                           |
+|----------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|<img src="Daikin.DotNetLib.Application/Images/application.png" width="64"/> | .NET Standard 2.0    | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Application.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Application) [Daikin.DotNetLib.Application](Daikin.DotNetLib.Application/README.md) has basic functions to generically assist with applications                                             |
+|<img src="Daikin.DotNetLib.Data/Images/data.png" width="64"/>               | .NET Standard 2.0    | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Data.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Data) [Daikin.DotNetLib.Data](Daikin.DotNetLib.Data/README.md) contains basic classes to assist with specific data types                                                                           |
+|<img src="Daikin.DotNetLib.DotNetNuke/Images/dotnetnuke.png" width="64"/>   | .NET Framework 4.7.2 | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.DotNetNuke.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.DotNetNuke) [Daikin.DotNetLib.DotNetNuke](Daikin.DotNetLib.DotNetNuke/README.md) supports Module Development on DNN (formerly DotNetNuke), the C# open source Content Management System (CMS)|
+|<img src="Daikin.DotNetLib.Facebook/Images/facebook.png" width="64"/>       | .NET Standard 2.0    | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Facebook.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Facebook) [Daikin.DotNetLib.Facebook](Daikin.DotNetLib.Facebook/README.md) supports Facebook API calls to pull content for a single source of information                                      |
+|<img src="Daikin.DotNetLib.MsTeams/Images/teams.png" width="64"/>           | .NET Standard 2.0    | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.MsTeams.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Teams) [Daikin.DotNetLib.MsTeams](Daikin.DotNetLib.MsTeams/README.md) are helpers for Microsoft Teams integration                                                                               |
+|<img src="Daikin.DotNetLib.Network/Images/network.png" width="64"/>         | .NET Standard 2.0    | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Network.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Network) [Daikin.DotNetLib.Network](Daikin.DotNetLib.Network/README.md) are helpers for making Web Api calls (typically JSON-based), SMTP, Networking, etc. calls                               |
+|<img src="Daikin.DotNetLib.Security/Images/security.png" width="64"/>       | .NET Standard 2.0    | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Security.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Security) [Daikin.DotNetLib.Security](Daikin.DotNetLib.Security/README.md) provides security helper to make it easier to encrypt and decrypt data                                              |
+|<img src="Daikin.DotNetLib.Serial/Images/serial.png" width="64"/>           | .NET Framework 4.7.2 | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Serial.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Serial) [Daikin.DotNetLib.Serial](Daikin.DotNetLib.Serial/README.md) are Windows-based USB and Serial port helpers for Windows-based applications                                                |
+|<img src="Daikin.DotNetLib.Serilog/Images/serilog.png" width="64"/>         | .NET Standard 2.0    | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Serilog.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Serilog) [Daikin.DotNetLib.Serilog](Daikin.DotNetLib.Serilog/README.md) are contains helper functions to assist with Serilog logging usage, especially with Microsoft and Azure SQL Server      |
+|<img src="Daikin.DotNetLib.Windows/Images/windows.png" width="64"/>         | .NET Framework 4.7.2 | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Windows.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Windows) [Daikin.DotNetLib.Windows](Daikin.DotNetLib.Windows/README.md) are helpers for Windows-based applications                                                                              |
+|<img src="Daikin.DotNetLib.Core.Tests/Images/debugging.png" width="64"/>    | .NET 5               | [Daikin.DotNetLib.Core.Tests](Daikin.DotNetLib.Core.Tests/README.md) are .NET Core xUnit Tests, serves as coding samples                                                                                                                                                                                                |
 
 # Introduction
 <img src="Images/DotNetLib.png" width="96" align="right" alt="DotNetLib Logo"/>
@@ -22,12 +22,7 @@ These .NET Standard, Core, and Framework libraries are a collection of work inte
 # Getting Started
 This presumes a strong understanding of the following tools and technologies, and that they are installed.
 
-- One of the following Visual Studio releases (Community, Professional, or Enterprise), fully patched:
-	- Visual Studio 2019
-- .NET Standard 2.0 libraries (used whenever possible)
-- .NET Framework 4.5.2 (maximizing backward compatibility with .NET Framework projects and still supported by Microsoft)
-- .NET Framework 4.7.2 (for DotNetNuke project to support DNN library requirements)
-- .NET 5 SDK (for xUnit Testing)
+- Visual Studio 2019 (Community, Professional, or Enterprise)
 - C# development
 - Web API (for specific projects)
 - Graph API (for specific projects)
@@ -73,11 +68,11 @@ Add *codesign.bat* to your Windows System PATH:
 After updating the PATH, it is recommended you restart your computer or restart all PowerShell, Command Prompt, and applications so they are able to access the updated path.
 
 # Contribution
-While primarily (at this point) done by the Daikin Applied Web Development Team, all .NET developers are welcome to strength their inner geekness to make this better. 
+While primarily (at this point) done by the [Daikin Applied](https://www.daikinapplied.com) Web Development Team, all .NET developers are welcome to strengthen these libraries. 
 
-Original development contribution by Hans Dickel as a way to give back to the development community and share his recursivegeek-iness!
+Original development contribution by [Hans Dickel](https://www.recursivegeek.com) as a way to give back to the development community and share his geekiness and passion for the Microsoft development stack.
 
 # License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-~ end ~
+~ End ~
