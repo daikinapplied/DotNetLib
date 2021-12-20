@@ -5,8 +5,9 @@ This is a .NET Standard 2.0 library to support Web Apis (especially with Json), 
 # Getting Started
 Use the library and take advantage of:
 
-- WebAPI calls, including via Proxy (useful for debugging via Fiddler).
-- JSON and XML WebAPI calls that automatically populate C# objects
+- Web API calls, including via Proxy (useful for debugging via Fiddler).
+- JSON and XML Web API calls that automatically populate C# objects
+- JSON helpers
 - Setup HttpConnections and access via OAuth2.  
 - SMTP Message Helper
 - Provide standardized ContentTypes, avoiding the use of IIS to provide (which isn't always easily managed).
