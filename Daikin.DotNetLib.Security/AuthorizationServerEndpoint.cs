@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Daikin.SSO.Portable
+namespace Daikin.DotNetLib.Security
 {
     // TypeSafeEnum
     public sealed class AuthorizationServerEndpoint

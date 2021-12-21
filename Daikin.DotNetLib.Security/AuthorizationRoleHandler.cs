@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Daikin.SSO.Portable
+namespace Daikin.DotNetLib.Security
 {
     public class AuthorizationRoleHandler : AuthorizationHandler<AuthorizationRoleRequirement>
     {

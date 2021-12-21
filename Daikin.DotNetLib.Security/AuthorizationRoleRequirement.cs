@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Daikin.SSO.Portable
+namespace Daikin.DotNetLib.Security
 {
     public class AuthorizationRoleRequirement : IAuthorizationRequirement
     {

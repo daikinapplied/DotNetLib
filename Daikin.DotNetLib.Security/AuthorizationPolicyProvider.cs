@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 
-namespace Daikin.SSO.Portable
+namespace Daikin.DotNetLib.Security
 {
     public class AuthorizationPolicyProvider : IAuthorizationPolicyProvider
     {
