@@ -9,7 +9,7 @@
     <Product>Daikin.DotNetLib</Product>
     <Description>Library for interacting with Facebook via .NET</Description>
     <Copyright>Copyright © 2018-2020</Copyright>
-    <Version>1.4.11</Version>
+    <Version>1.4.12</Version>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/DaikinApplied/DotNetLib</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
