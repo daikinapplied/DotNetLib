@@ -90,13 +90,17 @@ To implement, the following code must be inserted:
 Of particular interest is the *RoleJsonAuthorizaitonHandler.HasAccess()* also works, because of the remaining of the JSON array, for testing.
 
 ### RoleJsonAuthorization*
-Assists with role-based authorization from a JSON array, but is more complicated than **RoleJsonClaimTransformation*.
+Assists with role-based authorization from a JSON array, but is more complicated than **RoleJsonClaimTransformation*, but has benefits for both MVC and Razor approaches.
 
   ```
   public void ConfigureServices(IServiceCollection services)
   {
+    // Replace the default authorization policy provider with our own custom provider which can return authorization policies for given policy names (instead of using the default policy provider)
+    // This is used for policy attribute support, such as [RoleAuthorize]
+    services.AddSingleton<IAuthorizationPolicyProvider, RoleJsonAuthorizationPolicyProvider>();
+
     // Handlers must be provided for the requirements of the authorization policies
-    services.AddSingleton<IAuthorizationHandler, DotNetLib.Security.AuthorizationRoleHandler>();
+    services.AddSingleton<IAuthorizationHandler, RoleJsonAuthorizationHandler>();
 
     services
       .AddAuthentication(options =>
@@ -120,14 +124,6 @@ Assists with role-based authorization from a JSON array, but is more complicated
           options.SaveTokens = true;
           options.GetClaimsFromUserInfoEndpoint = true;
         });
-
-      // If using Razor Pages
-      services.AddRazorPages()
-        .AddRazorPagesOptions(options => // Add Page/Folder Security
-          {
-            options.Conventions.AuthorizeFolder("/", RoleJsonAuthorizationPolicyProvider.PolicyName); // locks down the entire site
-            options.Conventions.AllowAnonymousToPage("/Error");
-          });
   }
 
   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
