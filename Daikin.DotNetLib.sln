@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.202
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daikin.DotNetLib.DotNetNuke", "Daikin.DotNetLib.DotNetNuke\Daikin.DotNetLib.DotNetNuke.csproj", "{27350D35-164C-4579-9FD6-54CF4F070A08}"
 EndProject
@@ -13,7 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		azure-pipelines.yml = azure-pipelines.yml
-		Clean.VisualStudio.ps1 = Clean.VisualStudio.ps1
 		NuGetAll.ps1 = NuGetAll.ps1
 		NuGetPackage.ps1 = NuGetPackage.ps1
 		NuGetPublish.ps1 = NuGetPublish.ps1
@@ -33,9 +32,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daikin.DotNetLib.Serial", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daikin.DotNetLib.MsTeams", "Daikin.DotNetLib.MsTeams\Daikin.DotNetLib.MsTeams.csproj", "{2531F51B-CEBD-4DB4-9C97-82AA4B923E24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daikin.DotNetLib.Serilog", "Daikin.DotNetLib.Serilog\Daikin.DotNetLib.Serilog.csproj", "{49E644F7-5AD8-40D7-BF20-1B8E77042BA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daikin.DotNetLib.Serilog", "Daikin.DotNetLib.Serilog\Daikin.DotNetLib.Serilog.csproj", "{49E644F7-5AD8-40D7-BF20-1B8E77042BA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daikin.DotNetLib.Core.Tests", "Daikin.DotNetLib.Core.Tests\Daikin.DotNetLib.Core.Tests.csproj", "{F1C53110-C333-40A5-AAF8-53277E49D62E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daikin.DotNetLib.Core.Tests", "Daikin.DotNetLib.Core.Tests\Daikin.DotNetLib.Core.Tests.csproj", "{F1C53110-C333-40A5-AAF8-53277E49D62E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

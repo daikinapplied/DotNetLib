@@ -5,12 +5,13 @@ using Microsoft.Extensions.Options;
 
 namespace Daikin.DotNetLib.Security
 {
-    public class AuthorizationPolicyProvider : IAuthorizationPolicyProvider
+    public class RoleJsonAuthorizationPolicyProvider : IAuthorizationPolicyProvider
     {
         #region Constants
+        public const string PolicyClaimType = "role";
         public const string PolicyAttributePrefix = "Role";
         public const char PolicyDelimiter = ',';
-        public const string PolicyClaim = "role";
+        public const string PolicyName = "RoleJsonPolicy";
         #endregion
 
         #region Properties
@@ -18,7 +19,7 @@ namespace Daikin.DotNetLib.Security
         #endregion
 
         #region Constructors
-        public AuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
+        public RoleJsonAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
         {
             // ASP.NET Core only uses one authorization policy provider, so if the custom implementation doesn't handle all
             // policies (including default policies, etc.) it should fall back to an alternate provider.  In this case, a
@@ -46,7 +47,7 @@ namespace Daikin.DotNetLib.Security
             var roleNames = roleNameString.Split(PolicyDelimiter);
             foreach (var roleName in roleNames)
             {
-                policy.AddRequirements(new AuthorizationRoleRequirement(roleName));
+                policy.AddRequirements(new RoleJsonAuthorizationRequirement(roleName));
             }
             return Task.FromResult(policy.Build());
         }

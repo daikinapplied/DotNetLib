@@ -13,7 +13,7 @@ The following specific projects are available, used to create corresponding NuGe
 |<img src="Daikin.DotNetLib.Serial/Images/serial.png" width="64"/>           | .NET Framework 4.7.2 | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Serial.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Serial) [Daikin.DotNetLib.Serial](Daikin.DotNetLib.Serial/README.md) are Windows-based USB and Serial port helpers for Windows-based applications                                                |
 |<img src="Daikin.DotNetLib.Serilog/Images/serilog.png" width="64"/>         | .NET Standard 2.0    | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Serilog.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Serilog) [Daikin.DotNetLib.Serilog](Daikin.DotNetLib.Serilog/README.md) are contains helper functions to assist with Serilog logging usage, especially with Microsoft and Azure SQL Server      |
 |<img src="Daikin.DotNetLib.Windows/Images/windows.png" width="64"/>         | .NET Framework 4.7.2 | [![NuGet](https://img.shields.io/nuget/v/Daikin.DotNetLib.Windows.svg)](https://www.nuget.org/packages/Daikin.DotNetLib.Windows) [Daikin.DotNetLib.Windows](Daikin.DotNetLib.Windows/README.md) are helpers for Windows-based applications                                                                              |
-|<img src="Daikin.DotNetLib.Core.Tests/Images/debugging.png" width="64"/>    | .NET 5               | [Daikin.DotNetLib.Core.Tests](Daikin.DotNetLib.Core.Tests/README.md) are .NET Core xUnit Tests, serves as coding samples                                                                                                                                                                                                |
+|<img src="Daikin.DotNetLib.Core.Tests/Images/debugging.png" width="64"/>    | .NET 6               | [Daikin.DotNetLib.Core.Tests](Daikin.DotNetLib.Core.Tests/README.md) are .NET Core xUnit Tests, serves as coding samples                                                                                                                                                                                                |
 
 # Introduction
 <img src="Images/DotNetLib.png" width="96" align="right" alt="DotNetLib Logo"/>
@@ -22,7 +22,7 @@ These .NET Standard, Core, and Framework libraries are a collection of work inte
 # Getting Started
 This presumes a strong understanding of the following tools and technologies, and that they are installed.
 
-- Visual Studio 2019 (Community, Professional, or Enterprise)
+- Visual Studio 2022 (Community, Professional, or Enterprise)
 - C# development
 - Web API (for specific projects)
 - Graph API (for specific projects)

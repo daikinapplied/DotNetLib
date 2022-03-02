@@ -7,25 +7,21 @@ using System.Threading.Tasks;
 
 namespace Daikin.DotNetLib.Security
 {
-    public class AuthorizationRoleHandler : AuthorizationHandler<AuthorizationRoleRequirement>
+    public class RoleJsonAuthorizationHandler : AuthorizationHandler<RoleJsonAuthorizationRequirement>
     {
-        #region Constants
-        public const string PolicyName = "RolePolicy";
-        #endregion
-
         #region Fields
-        private readonly ILogger<AuthorizationRoleHandler> _logger;
+        private readonly ILogger<RoleJsonAuthorizationHandler> _logger;
         #endregion
 
         #region Constructors
-        public AuthorizationRoleHandler(ILogger<AuthorizationRoleHandler> logger)
+        public RoleJsonAuthorizationHandler(ILogger<RoleJsonAuthorizationHandler> logger)
         {
             _logger = logger;
         }
         #endregion
 
         #region Methods
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AuthorizationRoleRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleJsonAuthorizationRequirement requirement)
         {
             if (HasAccess(context.User, requirement.Roles.ToArray()))
             {
@@ -33,7 +29,7 @@ namespace Daikin.DotNetLib.Security
             }
             else
             {
-                _logger.LogInformation($"No access via {AuthorizationPolicyProvider.PolicyClaim} claim check");
+                _logger.LogInformation($"No access via {RoleJsonAuthorizationPolicyProvider.PolicyClaimType} claim check");
             }
 
             return Task.CompletedTask;
@@ -49,7 +45,7 @@ namespace Daikin.DotNetLib.Security
 
         public static List<string> Get(ClaimsPrincipal user)
         {
-            var claim = user.FindFirst(c => c.Type == AuthorizationPolicyProvider.PolicyClaim);
+            var claim = user.FindFirst(c => c.Type == RoleJsonAuthorizationPolicyProvider.PolicyClaimType);
             return claim == null ? new List<string>() : Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(claim.Value);
         }
         #endregion
