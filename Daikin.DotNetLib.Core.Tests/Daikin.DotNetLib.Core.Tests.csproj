@@ -55,7 +55,16 @@
     <ProjectReference Include="..\Daikin.DotNetLib.Facebook\Daikin.DotNetLib.Facebook.csproj" />
     <ProjectReference Include="..\Daikin.DotNetLib.MsTeams\Daikin.DotNetLib.MsTeams.csproj" />
     <ProjectReference Include="..\Daikin.DotNetLib.Network\Daikin.DotNetLib.Network.csproj" />
+    <ProjectReference Include="..\Daikin.DotNetLib.Security\Daikin.DotNetLib.Security.csproj" />
     <ProjectReference Include="..\Daikin.DotNetLib.Serilog\Daikin.DotNetLib.Serilog.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestCertificate\" />
+  </ItemGroup>
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+  	<Copy SourceFiles="..\Daikin.DotNetLib.Core.Tests\TestCertificate\mycertprivatekey.pfx" DestinationFolder="$(OutDir)TestCertificate" />
+  	<Copy SourceFiles="..\Daikin.DotNetLib.Core.Tests\TestCertificate\mycertpublickey.pem" DestinationFolder="$(OutDir)TestCertificate" />
+  </Target>
 
 </Project>
