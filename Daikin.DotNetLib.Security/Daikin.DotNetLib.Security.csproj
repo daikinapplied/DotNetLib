@@ -6,14 +6,14 @@
     <Company>Daikin Applied Americas Inc</Company>
     <Product>Daikin.DotNetLib</Product>
     <Description>Helper library to add centralized functionality for encryption/decryption operations</Description>
-    <Copyright>Copyright © 2016-2020</Copyright>
+    <Copyright>Copyright © 2016-2022</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/DaikinApplied/DotNetLib</PackageProjectUrl>
     <PackageIconUrl></PackageIconUrl>
     <RepositoryUrl>https://github.com/DaikinApplied/DotNetLib</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <ApplicationIcon>Images\security.ico</ApplicationIcon>
-    <Version>1.0.10</Version>
+    <Version>1.0.11</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>security.png</PackageIcon>

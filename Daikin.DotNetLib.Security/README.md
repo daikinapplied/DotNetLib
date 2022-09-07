@@ -51,6 +51,7 @@ To implement, the following code must be inserted:
           options.ClientSecret = "clientsecret";
           options.ResponseType = "code id_token"; // Hybrid Grant Type
           options.Scope.Add("openid email profile offline_access role");
+          options.ClaimActions.MapJsonKey(RoleJsonAuthorizationPolicyProvider.PolicyClaimType, RoleJsonAuthorizationPolicyProvider.PolicyClaimType, RoleJsonAuthorizationPolicyProvider.PolicyClaimType)
           options.TokenValidationParameters.RoleClaimType = RoleJsonAuthorizationPolicyProvider.PolicyClaimType;
           options.TokenValidationParameters.NameClaimType = "name";
           options.RequireHttpsMetadata = true;
@@ -120,6 +121,7 @@ Assists with role-based authorization from a JSON array, but is more complicated
           options.ClientSecret = "clientsecret";
           options.ResponseType = "code id_token"; // Hybrid Grant Type
           options.Scope.Add("openid email profile offline_access role");
+          options.ClaimActions.MapJsonKey(RoleJsonAuthorizationPolicyProvider.PolicyClaimType, RoleJsonAuthorizationPolicyProvider.PolicyClaimType, RoleJsonAuthorizationPolicyProvider.PolicyClaimType)
           options.RequireHttpsMetadata = true;
           options.SaveTokens = true;
           options.GetClaimsFromUserInfoEndpoint = true;
