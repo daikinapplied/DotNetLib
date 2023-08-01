@@ -1,6 +1,6 @@
 ﻿# Introduction
 <img src="Images/network.png" width="64" align="right" alt="Daikin.DotNetLib.Network Logo"/>
-This is a .NET Standard 2.0 library to support Web Apis (especially with Json), conversion of streaming data into objects (or vice-versa), and network calls.
+This is a .NET Standard 2.0 library to support Web APIs (especially with Json), conversion of streaming data into objects (or vice-versa), and network calls.
 
 # Getting Started
 Use the library and take advantage of:

@@ -35,26 +35,30 @@ Signtool.exe is installed as part of Visual Studio 2019 and 2017 via *C:\Program
 
 All of the projects use the following Post Build Event (e.g., Project Properties > *Build Events* > *Post-built event command line*):
 
-	codesign.bat "$(TargetPath)"
+```shell
+codesign.bat "$(TargetPath)"
+```
 
 Create a batch file called *codesign.bat*.  
 
 In the *codesign.bat* file, include something like:
 
-	@ECHO OFF
-	REM Change the Subject to your own Code-Signing Certificate that is installed in your Local Machine Store
-	SET subject=Daikin Applied Americas Inc.
-	SET filespec=%~1
-	IF /I "%filespec:~-5%"=="nupkg" GOTO NuGetSign
-	:SignTool
-	"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /sm /n "%subject%" /t "http://timestamp.verisign.com/scripts/timstamp.dll" "%filespec%"
-	GOTO Done
-	:NuGetSign
-	REM Get NuGet CommandLine from https://www.nuget.org/downloads
-	nuget sign "%filespec%" -CertificateStoreLocation "LocalMachine" -CertificateSubjectName "%subject" -TimeStamper "http://timestamp.comodoca.com?td=sha256"
-	GOTO Done
-	:Done
-	ECHO.
+```shell
+@ECHO OFF
+REM Change the Subject to your own Code-Signing Certificate that is installed in your Local Machine Store
+SET subject=Daikin Applied Americas Inc.
+SET filespec=%~1
+IF /I "%filespec:~-5%"=="nupkg" GOTO NuGetSign
+:SignTool
+"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /sm /n "%subject%" /t "http://timestamp.verisign.com/scripts/timstamp.dll" "%filespec%"
+GOTO Done
+:NuGetSign
+REM Get NuGet CommandLine from https://www.nuget.org/downloads
+nuget sign "%filespec%" -CertificateStoreLocation "LocalMachine" -CertificateSubjectName "%subject" -TimeStamper "http://timestamp.comodoca.com?td=sha256"
+GOTO Done
+:Done
+ECHO.
+```
 
 This solution handles executables (exe files), dynamic link libraries (dll files), PowerShell (ps1 files), and NuGet Packages (nupkg files), making it very versitile by calling *codesign &lt;yourfile&gt;*.  As long as every developer has *codesign.bat* setup, they can all compile this project using a desired code signing certificate.
 
