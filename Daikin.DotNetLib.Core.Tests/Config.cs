@@ -7,12 +7,12 @@ namespace Daikin.DotNetLib.Core.Tests
     public class Config
     {
         #region Properties
-        public string FacebookAccessToken { get; set; }
-        public string FacebookAppSecret { get; set; }
-        public string FacebookPageOrId { get; set; }
+        //public string FacebookAccessToken { get; set; }
+        //public string FacebookAppSecret { get; set; }
+        //public string FacebookPageOrId { get; set; }
         public string TeamsWebHookUrl { get; set; }
-        public string FakeJsonUrl { get; set; }
-        public string FakeJsonToken { get; set; }
+        //public string FakeJsonUrl { get; set; }
+        //public string FakeJsonToken { get; set; }
         #endregion
 
         #region Functions

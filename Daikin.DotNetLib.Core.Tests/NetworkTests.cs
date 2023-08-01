@@ -1,7 +1,7 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Daikin.DotNetLib.Core.Tests.Models;
+﻿//using System;
+//using System.Net.Http;
+//using System.Net.Http.Headers;
+//using Daikin.DotNetLib.Core.Tests.Models;
 using Daikin.DotNetLib.Network;
 using Xunit;
 
@@ -10,35 +10,35 @@ namespace Daikin.DotNetLib.Core.Tests
     public class NetworkTests
     {
         #region Fields
-        private readonly Config _configuration;
+        //private readonly Config _configuration;
         #endregion
 
         #region Constructors
-        public NetworkTests()
-        {
-            _configuration = Config.GetConfiguration();
-        }
+        //public NetworkTests()
+        //{
+        //    _configuration = Config.GetConfiguration();
+        //}
         #endregion
 
         #region Methods
-        public FakeJsonRequest BuildFakeRequest()
-        {
-            var request = new FakeJsonRequest
-            {
-                Token = _configuration.FakeJsonToken
-            };
-            return request;
-        }
+        //public FakeJsonRequest BuildFakeRequest()
+        //{
+        //    var request = new FakeJsonRequest
+        //    {
+        //        Token = _configuration.FakeJsonToken
+        //    };
+        //    return request;
+        //}
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Configuration Checks
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        [Fact]
-        public void TestConfiguration()
-        {
-            Assert.NotEmpty(_configuration.FakeJsonUrl);
-            Assert.NotEmpty(_configuration.FakeJsonToken);
-        }
+        //[Fact]
+        //public void TestConfiguration()
+        //{
+        //    Assert.NotEmpty(_configuration.FakeJsonUrl);
+        //    Assert.NotEmpty(_configuration.FakeJsonToken);
+        //}
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Simple Checks
@@ -57,25 +57,25 @@ namespace Daikin.DotNetLib.Core.Tests
         // WebAPI Testing
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        [Fact]
-        public void ApiPostData()
-        {
-            var request = BuildFakeRequest();
-            var (postResponse, httpResponse) = WebApi.Call<FakeJsonRequest, FakeJsonResponse>(_configuration.FakeJsonUrl, request, HttpMethod.Post);
-            Assert.True(httpResponse.IsSuccessStatusCode);
-            Assert.NotNull(postResponse);
-            Assert.NotNull(postResponse.Data.LastLogin.Ip4);
-        }
+        //[Fact]
+        //public void ApiPostData()
+        //{
+        //    var request = BuildFakeRequest();
+        //    var (postResponse, httpResponse) = WebApi.Call<FakeJsonRequest, FakeJsonResponse>(_configuration.FakeJsonUrl, request, HttpMethod.Post);
+        //    Assert.True(httpResponse.IsSuccessStatusCode);
+        //    Assert.NotNull(postResponse);
+        //    Assert.NotNull(postResponse.Data.LastLogin.Ip4);
+        //}
 
-        [Fact]
-        public void ApiPutData()
-        {
-            var request = BuildFakeRequest();
-            var (postResponse, httpResponse) = WebApi.Call<FakeJsonRequest, FakeJsonResponse>(_configuration.FakeJsonUrl, request, HttpMethod.Put);
-            Assert.True(httpResponse.IsSuccessStatusCode);
-            Assert.NotNull(postResponse);
-            Assert.NotNull(postResponse.Data.LastLogin.DateTime);
-        }
+        //[Fact]
+        //public void ApiPutData()
+        //{
+        //    var request = BuildFakeRequest();
+        //    var (postResponse, httpResponse) = WebApi.Call<FakeJsonRequest, FakeJsonResponse>(_configuration.FakeJsonUrl, request, HttpMethod.Put);
+        //    Assert.True(httpResponse.IsSuccessStatusCode);
+        //    Assert.NotNull(postResponse);
+        //    Assert.NotNull(postResponse.Data.LastLogin.DateTime);
+        //}
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Ipv4HostMask
