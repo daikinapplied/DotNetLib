@@ -57,6 +57,36 @@ namespace Daikin.DotNetLib.Network
             return false; // no access
         }
 
+        public static bool HasRemoteAccess(string filterAccess, string ipRemote)
+        {
+            var filterAccessEntries = filterAccess.Split(" || ");
+            foreach (var filterAccessEntry in filterAccessEntries) // Hosts and IPs Allowed Access
+            {
+                // Determine if access check is IP address (which allows RegEx) or hostname
+                if (IsHostName(filterAccessEntry))
+                {
+                    try
+                    {
+                        var ipHostEntry = System.Net.Dns.GetHostEntry(filterAccessEntry); // Convert hostname to IP address
+                        if (ipHostEntry.AddressList.Any(ipAddress => ipAddress.ToString() == ipRemote))
+                        {
+                            return true; // Remote IP matches an IP Address associated with the hostname.  Access Granted.
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // Do nothing - likely a bad hostname
+                    }
+                }
+                else
+                {
+                    var regEx = new Regex($"^{filterAccessEntry}$");
+                    if (regEx.IsMatch(ipRemote?.ToString() ?? string.Empty)) return true; // Remote IP matches the RegEx of an acceptable IP address.  Access Granted.
+                }
+            }
+            return false; // no access
+        }
+
         // Not needed with .NET Core
         public static string[] Split(this string data, string sep)
         {
